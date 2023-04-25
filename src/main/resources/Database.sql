@@ -11,3 +11,20 @@ CREATE TABLE user (
 );
 
 
+CREATE TABLE project (
+    pid INT NOT NULL AUTO_INCREMENT,
+    projectName VARCHAR(255) NOT NULL,
+    uid INT NOT NULL,
+    PRIMARY KEY (pid),
+    FOREIGN KEY (uid) REFERENCES user(uid)
+);
+
+
+CREATE TABLE module (
+    mid INT NOT NULL AUTO_INCREMENT,
+    moduleName VARCHAR(255) NOT NULL,
+    date VARCHAR(255) NOT NULL,
+    pid INT NOT NULL,
+    PRIMARY KEY (mid),
+    FOREIGN KEY (pid) REFERENCES project(pid)
+);
