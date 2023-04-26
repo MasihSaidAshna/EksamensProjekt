@@ -4,10 +4,12 @@ import com.example.eksamensprojekt.DTO.*;
 import com.example.eksamensprojekt.models.User;
 import com.example.eksamensprojekt.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
+@Controller
+@RequestMapping("")
 public class LoginController {
 
     private final UserService userService;
@@ -22,6 +24,14 @@ public class LoginController {
     public String showHomepage() {
         return "homepage";
     }
+
+
+    @GetMapping("/signup")
+    public String signup(Model model){
+        model.addAttribute("signupForm", new UserSignupDTO());
+        return "signup";
+    }
+
 
     @PostMapping("/signup")
     public String doSignup(@ModelAttribute("signupForm") UserSignupDTO userSignupDTO, Model model) {
