@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("")
@@ -64,14 +65,15 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("user") UserDTO userDTO, HttpSession session, Model model) {
+    public String doLogin(@ModelAttribute("user") UserDTO userDTO, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userService.findUserByEmailAndPassword(email, password);
         if (user != null){
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(60);
-            return "redirect:/";
+            redirectAttributes.addAttribute("userID", user.getUserID());
+            return "redirect:/profile";
         }
         else {
             model.addAttribute("errorMessage", "Invalid email or password");
@@ -85,5 +87,12 @@ public class LoginController {
         session.invalidate();
         return "homepage";
     }
+
+    @GetMapping("/profile")
+    public String showProfile(User user, Model model){
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
 
 }

@@ -5,7 +5,7 @@ import com.example.eksamensprojekt.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/user")
@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/list")
     public String showUsers(Model model) {
-        List<User> userList = userService.getUsers();
+        ArrayList<User> userList = userService.getUsers();
         model.addAttribute("userList", userList);
         return "users";
     }
