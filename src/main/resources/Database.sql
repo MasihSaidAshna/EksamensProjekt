@@ -33,3 +33,16 @@ CREATE TABLE module (
 -- Add test data
 INSERT INTO user (name, password, email) VALUES
     ('Admin1', 'root', 'Ad@Min.com');
+
+INSERT INTO user (name, password, email) VALUES
+    ('Batman', 'bat', 'Bat@Man.com');
+
+INSERT INTO project (projectName, uid) VALUES
+    ('Stupid program', (SELECT uid FROM user WHERE name = 'Batman'));
+
+INSERT INTO project (projectName, uid) VALUES
+    ('Program', (SELECT uid FROM user WHERE name = 'Admin1'));
+
+
+
+

@@ -2,20 +2,22 @@ package com.example.eksamensprojekt.models;
 
 public class Module {
 
-    private int id;
+    private int moduleID;
     private String moduleName;
+    private int projectID;
 
-    public Module(int id, String moduleName) {
-        this.id = id;
+    public Module(int moduleID, String moduleName, int projectID) {
+        this.moduleID = moduleID;
         this.moduleName = moduleName;
+        this.projectID = projectID;
     }
 
-    public int getId() {
-        return id;
+    public int getModuleID() {
+        return moduleID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setModuleID(int moduleID) {
+        this.moduleID = moduleID;
     }
 
     public String getModuleName() {
@@ -24,5 +26,13 @@ public class Module {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 }

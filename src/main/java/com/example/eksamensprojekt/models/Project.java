@@ -2,20 +2,22 @@ package com.example.eksamensprojekt.models;
 
 public class Project {
 
-    private int id;
+    private int projectID;
     private String projectName;
+    private int userID;
 
-    public Project(int id, String projectName) {
-        this.id = id;
+    public Project(int projectID, String projectName, int userID) {
+        this.projectID = projectID;
         this.projectName = projectName;
+        this.userID = userID;
     }
 
-    public int getId() {
-        return id;
+    public int getProjectID() {
+        return projectID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 
     public String getProjectName() {
@@ -24,5 +26,13 @@ public class Project {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

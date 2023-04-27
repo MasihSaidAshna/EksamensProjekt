@@ -58,7 +58,7 @@ public class UserRepository {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 user = new User();
-                user.setId(rs.getInt("uid"));
+                user.setUserID(rs.getInt("uid"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setUserName(rs.getString("name"));
@@ -74,7 +74,7 @@ public class UserRepository {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "INSERT INTO user(userID, username, password, email) VALUES(?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setInt(1, user.getId());
+            pstmt.setInt(1, user.getUserID());
             pstmt.setString(2, user.getUserName());
             pstmt.setString(3, user.getPassword());
             pstmt.setString(4, user.getEmail());
