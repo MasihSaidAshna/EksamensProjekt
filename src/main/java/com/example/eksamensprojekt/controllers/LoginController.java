@@ -65,15 +65,14 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("user") UserDTO userDTO, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    public String doLogin(@ModelAttribute("user") UserDTO userDTO, HttpSession session, Model model) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userService.findUserByEmailAndPassword(email, password);
         if (user != null){
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(60);
-            redirectAttributes.addAttribute("userID", user.getUserID());
-            return "redirect:/profile";
+            return "redirect:/profile?userID=" + user.getUserID();
         }
         else {
             model.addAttribute("errorMessage", "Invalid email or password");
@@ -89,7 +88,8 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(User user, Model model){
+    public String showProfile(@RequestParam("userID") int userID, Model model){
+        User user = userService.fetchUser(userID);
         model.addAttribute("user", user);
         return "profile";
     }
