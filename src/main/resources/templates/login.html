@@ -9,17 +9,29 @@
   <link rel="stylesheet" href="/static/login-stylesheet.css">
 </head>
 <body>
-<h1> Login </h1>
-
-<div class="form-body">
-  <form th:action="@{/login}" method="post">
-    <label>Email:</label>
-    <input type="email" name="email" />
-    <label>Password:</label>
-    <input type="password" name="password" />
-    <button type="submit">Login</button>
-  </form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center mb-4">Login</h3>
+          <form th:action="@{/login}" method="post">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+              <div> <a href="/about.html">Dont have an account?</a>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 </body>
 </html>
