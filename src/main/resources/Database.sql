@@ -28,3 +28,8 @@ CREATE TABLE module (
     PRIMARY KEY (mid),
     FOREIGN KEY (pid) REFERENCES project(pid)
 );
+
+
+-- Add test data
+INSERT INTO user (name, password, email) VALUES
+    ('Admin1', 'root', 'Ad@Min.com');

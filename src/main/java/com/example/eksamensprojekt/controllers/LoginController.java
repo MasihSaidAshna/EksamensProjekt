@@ -86,5 +86,4 @@ public class LoginController {
         return "homepage";
     }
 
-
 }
