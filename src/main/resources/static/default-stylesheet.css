@@ -1,3 +1,17 @@
+h1 {
+    font-size: 100px;
+    text-align: center;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: royalblue;
+}
+
+h2 {
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: royalblue;
+}
+
 .signup-form {
     width: 400px;
     margin: 0 auto;
@@ -56,12 +70,6 @@ body {
     background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
 }
 
-h2 {
-    font-family: "Times New Roman";
-    font-weight: bold;
-    color: royalblue;
-
-}
 
 .signup-form {
     background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");

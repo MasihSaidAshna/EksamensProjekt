@@ -100,14 +100,6 @@ public class LoginController {
     }
 
 
-    @GetMapping("/admin/users")
-    public String showUsers(Model model){
-        ArrayList<User> users = userService.getUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
-
-
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

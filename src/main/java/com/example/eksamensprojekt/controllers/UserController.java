@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
     private UserService userService;
@@ -18,10 +17,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/list")
-    public String showUsers(Model model) {
-        ArrayList<User> userList = userService.getUsers();
-        model.addAttribute("userList", userList);
+    @GetMapping("/admin/users")
+    public String showUsers(Model model){
+        ArrayList<User> users = userService.getUsers();
+        model.addAttribute("users", users);
         return "users";
     }
 
