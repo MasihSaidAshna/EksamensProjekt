@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("")
@@ -72,12 +72,39 @@ public class LoginController {
         if (user != null){
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(60);
+            if (user.getUserID() == 1){
+                return "redirect:/admin/profile";
+            }
+            else {
             return "redirect:/profile?userID=" + user.getUserID();
+            }
         }
         else {
             model.addAttribute("errorMessage", "Invalid email or password");
             return "login";
         }
+    }
+
+
+    @GetMapping("/admin/profile")
+    public String showAdminProfile(){
+        return "admin-profile";
+    }
+
+
+    @GetMapping("/profile")
+    public String showProfile(@RequestParam("userID") int userID, Model model){
+        User user = userService.fetchUser(userID);
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
+
+    @GetMapping("/admin/users")
+    public String showUsers(Model model){
+        ArrayList<User> users = userService.getUsers();
+        model.addAttribute("users", users);
+        return "users";
     }
 
 
@@ -87,12 +114,6 @@ public class LoginController {
         return "homepage";
     }
 
-    @GetMapping("/profile")
-    public String showProfile(@RequestParam("userID") int userID, Model model){
-        User user = userService.fetchUser(userID);
-        model.addAttribute("user", user);
-        return "profile";
-    }
 
 
 }

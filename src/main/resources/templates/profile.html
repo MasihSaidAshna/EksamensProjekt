@@ -9,6 +9,14 @@
     <title>Profile</title>
 </head>
 <body>
-  <h1>Welcome to your profile, <span th:text="${user.getUserName()}"></span></h1>
+<div class="container-fluid text-center">
+    <h1>Welcome to your profile, <span th:text="${user.getUserName()}"></span></h1>
+    <div class = "p-2">
+        <a class = "btn btn-primary" th:href="@{{userID}/projects(userID=${user.userID})}">See my projects</a>
+    </div>
+    <div class = "p-2">
+        <a class = "btn btn-danger" th:href="@{/logout}">Log out</a>
+    </div>
+</div>
 </body>
 </html>

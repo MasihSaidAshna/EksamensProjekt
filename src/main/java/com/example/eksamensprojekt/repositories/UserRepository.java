@@ -72,7 +72,7 @@ public class UserRepository {
 
     public boolean createUser(User user){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO user(userID, username, password, email) VALUES(?, ?, ?, ?)";
+            String SQL = "INSERT INTO user(uid, name, password, email) VALUES(?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, user.getUserID());
             pstmt.setString(2, user.getUserName());
