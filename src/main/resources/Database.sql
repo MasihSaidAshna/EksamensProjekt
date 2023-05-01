@@ -14,6 +14,7 @@ CREATE TABLE user (
 CREATE TABLE project (
     pid INT NOT NULL AUTO_INCREMENT,
     projectName VARCHAR(255) NOT NULL,
+    deadline date NOT NULL,
     uid INT NOT NULL,
     PRIMARY KEY (pid),
     FOREIGN KEY (uid) REFERENCES user(uid)
@@ -23,7 +24,9 @@ CREATE TABLE project (
 CREATE TABLE module (
     mid INT NOT NULL AUTO_INCREMENT,
     moduleName VARCHAR(255) NOT NULL,
-    date VARCHAR(255) NOT NULL,
+    deadline date NOT NULL,
+    timeestimate int NOT NULL,
+    setstatus ENUM ('TO DO', 'DOING', 'DROPPED', 'DONE'),
     pid INT NOT NULL,
     PRIMARY KEY (mid),
     FOREIGN KEY (pid) REFERENCES project(pid)

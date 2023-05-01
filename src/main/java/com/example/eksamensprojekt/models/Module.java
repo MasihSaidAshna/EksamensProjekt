@@ -2,6 +2,13 @@ package com.example.eksamensprojekt.models;
 
 public class Module {
 
+    enum Status {
+        TO_DO,
+        DOING,
+        DROPPED,
+        DONE
+    }
+
     private int moduleID;
     private String moduleName;
     private int projectID;
