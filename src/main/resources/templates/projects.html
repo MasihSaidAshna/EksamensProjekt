@@ -14,11 +14,15 @@
   <table class="table table-bordered">
     <tr>
       <th>Project name</th>
+      <th>Deadline</th>
+      <th>Time left until deadline</th>
     </tr>
     <tbody>
     <th:block th:each="project : ${projects}">
       <tr>
         <td>[[${project.getProjectName}]]</td>
+        <td>[[${project.getDeadline}]]</td>
+        <td>[[${project.getTimeEstimate}]]</td>
       </tr>
     </th:block>
     </tbody>

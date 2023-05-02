@@ -25,8 +25,7 @@ CREATE TABLE module (
     mid INT NOT NULL AUTO_INCREMENT,
     moduleName VARCHAR(255) NOT NULL,
     deadline date NOT NULL,
-    timeestimate int NOT NULL,
-    setstatus ENUM ('TO DO', 'DOING', 'DROPPED', 'DONE'),
+    setstatus VARCHAR(255) NOT NULL,
     pid INT NOT NULL,
     PRIMARY KEY (mid),
     FOREIGN KEY (pid) REFERENCES project(pid)
@@ -40,11 +39,14 @@ INSERT INTO user (name, password, email) VALUES
 INSERT INTO user (name, password, email) VALUES
     ('Batman', 'bat', 'Bat@Man.com');
 
-INSERT INTO project (projectName, uid) VALUES
-    ('Stupid program', (SELECT uid FROM user WHERE name = 'Batman'));
+INSERT INTO project (projectName, deadline, uid) VALUES
+    ('Stupid program', STR_TO_DATE('2023-05-10','%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Batman'));
 
-INSERT INTO project (projectName, uid) VALUES
-    ('Program', (SELECT uid FROM user WHERE name = 'Admin1'));
+INSERT INTO project (projectName, deadline, uid) VALUES
+    ('Clever program', STR_TO_DATE('2024-06-10','%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Batman'));
+
+INSERT INTO project (projectName, deadline, uid) VALUES
+    ('Program', STR_TO_DATE('2023-08-06', '%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Admin1'));
 
 
 

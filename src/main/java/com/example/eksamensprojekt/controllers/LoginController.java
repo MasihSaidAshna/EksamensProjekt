@@ -7,14 +7,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("")
 public class LoginController {
 
     private final UserService userService;
-
 
     public LoginController(UserService userService) {
         this.userService = userService;
@@ -29,16 +27,16 @@ public class LoginController {
 
     @GetMapping("/signup")
     public String signup(Model model){
-        model.addAttribute("signupForm", new UserSignupDTO());
+        model.addAttribute("signupForm", new UserDTO());
         return "signup";
     }
 
 
     @PostMapping("/signup")
-    public String doSignup(@ModelAttribute("signupForm") UserSignupDTO userSignupDTO, Model model) {
-        String username = userSignupDTO.getUsername();
-        String email = userSignupDTO.getEmail();
-        String password = userSignupDTO.getPassword();
+    public String doSignup(@ModelAttribute("signupForm") UserDTO userDTO, Model model) {
+        String username = userDTO.getUsername();
+        String email = userDTO.getEmail();
+        String password = userDTO.getPassword();
 
         User user = new User();
         user.setUserName(username);

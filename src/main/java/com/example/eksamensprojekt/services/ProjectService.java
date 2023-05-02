@@ -5,6 +5,8 @@ import com.example.eksamensprojekt.models.User;
 import org.springframework.stereotype.Service;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.repositories.ProjectRepository;
+
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -31,8 +33,13 @@ public class ProjectService {
     }
 
 
-    public void updateProject(User user, Project project, String name) {
-        projectRepository.updateProject(user, project, name);
+    public void updateProjectName(User user, Project project, String name) {
+        projectRepository.updateProjectName(user, project, name);
+    }
+
+
+    public void updateProjectDeadline(User user, Project project, LocalDate deadline) {
+        projectRepository.updateProjectDeadline(user, project, deadline);
     }
 
 

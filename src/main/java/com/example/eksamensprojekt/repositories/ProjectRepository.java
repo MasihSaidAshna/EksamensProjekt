@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.repositories;
 import com.example.eksamensprojekt.models.*;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Repository
@@ -18,15 +19,17 @@ public class ProjectRepository {
     public ArrayList<Project> getProjects(User user) {
         ArrayList<Project> projectArrayList = new ArrayList<>();
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM user JOIN project WHERE project.uid = ?";
+            String SQL = "SELECT * FROM user JOIN project WHERE project.uid = ? AND user.name = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, user.getUserID());
+            pstmt.setString(2, user.getUserName());
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int projectID = rs.getInt("pid");
                 String projectName = rs.getString("projectName");
                 int userID = rs.getInt("uid");
-                Project project = new Project(projectID, projectName, userID);
+                LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                Project project = new Project(projectID, userID, projectName, deadline);
                 projectArrayList.add(project);
             }
         } catch (SQLException e) {
@@ -45,9 +48,10 @@ public class ProjectRepository {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int projectID = rs.getInt("pid");
-                String projectName = rs.getString("projectName");
                 int userID = rs.getInt("uid");
-                return new Project(projectID, projectName, userID);
+                String projectName = rs.getString("projectName");
+                LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                return new Project(projectID, userID, projectName, deadline);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -58,10 +62,11 @@ public class ProjectRepository {
 
     public void createProject(User user, Project project){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO project (projectName, uid) VALUES (?, (SELECT uid FROM user WHERE name = ?));";
+            String SQL = "INSERT INTO project (projectName, deadline, uid) VALUES (?, STR_TO_DATE(?,'%Y-%m-%d'), (SELECT uid FROM user WHERE name = ?));";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, project.getProjectName());
-            pstmt.setString(1, user.getUserName());
+            pstmt.setString(2, project.getDeadline().toString());
+            pstmt.setString(3, user.getUserName());
             pstmt.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -69,11 +74,25 @@ public class ProjectRepository {
     }
 
 
-    public void updateProject(User user, Project project, String name) {
+    public void updateProjectName(User user, Project project, String name) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "UPDATE project SET projectName = ?, WHERE uid = ? AND pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, name);
+            pstmt.setInt(2, user.getUserID());
+            pstmt.setInt(3, project.getProjectID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void updateProjectDeadline(User user, Project project, LocalDate deadline) {
+        try(Connection con = DBManager.getConnection()) {
+            String SQL = "UPDATE project SET deadline = STR_TO_DATE(?,'%Y-%m-%d'), WHERE uid = ? AND pid = ?;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, deadline.toString());
             pstmt.setInt(2, user.getUserID());
             pstmt.setInt(3, project.getProjectID());
             pstmt.executeUpdate();
