@@ -76,3 +76,8 @@ body {
     border-color: royalblue;
     border: 5px royalblue inset;
 }
+
+.crud-container {
+    display: inline-block;
+    margin-right: 10px;
+}

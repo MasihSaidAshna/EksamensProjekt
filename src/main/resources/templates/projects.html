@@ -26,6 +26,25 @@
   <div class = "p-2">
     <a class = "btn btn-secondary" th:href="@{/profile((userID=${user.userID}))}">Go Back</a>
   </div>
+
+  <div class="crud-container">
+  <form th:action="@{/delete}" method="post">
+    <input type="hidden" th:name="id" th:value="${projects.id}" />
+    <button type="submit" class="btn btn danger">Delete</button>
+  </form>
+
+  <form th:action="@{/create}" method="post">
+    <input type="hidden" th:name="id" th:value="${projects.id}" />
+    <button type="submit" class="btn btn danger">create</button>
+  </form>
+
+  <form th:action="@{/update}" method="post">
+    <input type="hidden" th:name="id" th:value="${projects.id}" />
+    <button type="submit" class="btn btn danger" >update</button>
+  </form>
+</div>
+
+
 </div>
 
 </body>
