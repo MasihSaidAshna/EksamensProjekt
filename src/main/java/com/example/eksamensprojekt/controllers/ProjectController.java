@@ -25,6 +25,7 @@ public class ProjectController {
 
     @GetMapping("/projects/{userID}")
     public String getProjects(@PathVariable("userID") int userID, Model model, HttpSession httpSession) {
+        //httpSession.setAttribute("userID", userID);
         User user = (User) httpSession.getAttribute("user");
         ArrayList<Project> projects = projectService.getProjects(user);
         model.addAttribute("userID", userID);
@@ -36,18 +37,18 @@ public class ProjectController {
 
 
     @GetMapping("/projects/create/{userID}")
-    public String createProject(/*@PathVariable("userID") int userID,*/@ModelAttribute("user") User user, Model model){
-        model.addAttribute("projectForm", new Project());
+    public String createProject(@PathVariable("userID") int userID, @ModelAttribute("user") User user, Model model){
+        model.addAttribute("projectForm", new ProjectDTO());
         System.out.println(model);
         return "project-form";
     }
 
 
     @PostMapping("/projects/create/{userID}")
-    public String doCreateProject(@ModelAttribute("projectForm") Project Project, HttpSession httpSession, Model model) {
+    public String doCreateProject(@ModelAttribute("projectForm") ProjectDTO projectDTO, HttpSession httpSession, Model model) {
         User user = (User) httpSession.getAttribute("user");
-        String projectName = Project.getProjectName();
-        LocalDate deadline = Project.getDeadline();
+        String projectName = projectDTO.getProjectName();
+        LocalDate deadline = projectDTO.getDeadline();
 
         //User user = userService.fetchUser(userID);
         Project project = new Project();
@@ -63,41 +64,6 @@ public class ProjectController {
             model.addAttribute("errorMessage", "Failed to create user");
             return "error";
         }
-    }
-
-
-    @GetMapping("/projects/update/{projectID}")
-    public String updateProject(@PathVariable("projectID") int projectID, Model model, HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
-        model.addAttribute("projectForm", project);
-        return "projectupdate-form";
-    }
-
-
-    @PostMapping("/projects/update/{projectID}")
-    public String doUpdateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projectForm") Project project, /*@RequestParam("projectName") String pname, @RequestParam("deadline") LocalDate deadline,*/ HttpSession httpSession, Model model) {
-        User user = (User) httpSession.getAttribute("user");
-        String newProjectName = project.getProjectName();
-        LocalDate newProjectDeadline = project.getDeadline();
-
-        boolean success = projectService.updateProject(user, project, newProjectName, newProjectDeadline);
-        if (success){
-            return "redirect:/projects/" + user.getUserID();
-        }
-        else {
-            model.addAttribute("errorMessage", "Failed to create user");
-            return "error";
-        }
-    }
-
-
-    @GetMapping("/projects/delete/{projectID}")
-    public String deleteProject(@PathVariable("projectID") int projectID, HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
-        projectService.deleteProject(user, project);
-        return "projects";
     }
 
 
