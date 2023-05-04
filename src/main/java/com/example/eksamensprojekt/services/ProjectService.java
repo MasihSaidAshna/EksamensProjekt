@@ -23,8 +23,8 @@ public class ProjectService {
     }
 
 
-    public Project fetchProject(User user, String name) {
-        return projectRepository.fetchProject(user, name);
+    public Project fetchProject(User user, int pid) {
+        return projectRepository.fetchProject(user, pid);
     }
 
 
@@ -33,13 +33,8 @@ public class ProjectService {
     }
 
 
-    public void updateProjectName(User user, Project project, String name) {
-        projectRepository.updateProjectName(user, project, name);
-    }
-
-
-    public void updateProjectDeadline(User user, Project project, LocalDate deadline) {
-        projectRepository.updateProjectDeadline(user, project, deadline);
+    public boolean updateProject(User user, Project project, String name, LocalDate deadline) {
+        return projectRepository.updateProject(user, project, name, deadline);
     }
 
 

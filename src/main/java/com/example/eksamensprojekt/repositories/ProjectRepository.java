@@ -39,15 +39,14 @@ public class ProjectRepository {
     }
 
 
-    public Project fetchProject(User user, String name) {
+    public Project fetchProject(User user, int projectID) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM project WHERE projectName = ? AND project.uid = ?;";
+            String SQL = "SELECT * FROM project WHERE pid = ? AND project.uid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1, name);
-            pstmt.setInt(1, user.getUserID());
+            pstmt.setInt(1, projectID);
+            pstmt.setInt(2, user.getUserID());
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                int projectID = rs.getInt("pid");
                 int userID = rs.getInt("uid");
                 String projectName = rs.getString("projectName");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
@@ -75,28 +74,16 @@ public class ProjectRepository {
     }
 
 
-    public void updateProjectName(User user, Project project, String name) {
+    public boolean updateProject(User user, Project project, String name, LocalDate deadline) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE project SET projectName = ?, WHERE uid = ? AND pid = ?;";
+            String SQL = "UPDATE project SET projectName = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE uid = ? AND pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, name);
-            pstmt.setInt(2, user.getUserID());
-            pstmt.setInt(3, project.getProjectID());
+            pstmt.setString(2, deadline.toString());
+            pstmt.setInt(3, user.getUserID());
+            pstmt.setInt(4, project.getProjectID());
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void updateProjectDeadline(User user, Project project, LocalDate deadline) {
-        try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE project SET deadline = STR_TO_DATE(?,'%Y-%m-%d'), WHERE uid = ? AND pid = ?;";
-            PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1, deadline.toString());
-            pstmt.setInt(2, user.getUserID());
-            pstmt.setInt(3, project.getProjectID());
-            pstmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
