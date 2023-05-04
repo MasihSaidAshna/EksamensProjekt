@@ -28,8 +28,8 @@ public class ProjectService {
     }
 
 
-    public void createProject(User user, Project project){
-        projectRepository.createProject(user, project);
+    public boolean createProject(User user, Project project){
+        return projectRepository.createProject(user, project);
     }
 
 

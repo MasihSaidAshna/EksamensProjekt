@@ -11,9 +11,11 @@ public class Project {
     private int projectID;
     private int userID;
     private String projectName;
-    //private DateTimeFormatter deadline = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
     private LocalDate deadline;
     private Period timeEstimate;
+
+    public Project() {
+    }
 
     public Project(int projectID, int userID, String projectName, LocalDate deadline) {
         this.projectID = projectID;

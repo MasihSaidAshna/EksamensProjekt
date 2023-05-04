@@ -14,20 +14,31 @@
   <table class="table table-bordered">
     <tr>
       <th>Project name</th>
+      <th>Project creator name</th>
       <th>Deadline</th>
       <th>Time left until deadline</th>
+      <th>Update</th>
+      <th>Delete</th>
     </tr>
     <tbody>
     <th:block th:each="project : ${projects}">
       <tr>
         <td>[[${project.getProjectName}]]</td>
+        <td>[[${user.getUserName()}]]</td>
         <td>[[${project.getDeadline}]]</td>
         <td>[[${project.getTimeEstimate}]]</td>
+        <td th:action="@{/update}" method="post">
+          <button type="button" class="btn btn-secondary">Update Project</button>
+        </td>
+        <td th:action="@{/delete}" method="post">
+          <button type="button" class="btn btn danger">Delete Project</button>
+        </td>
       </tr>
     </th:block>
     </tbody>
   </table>
   <div class = "p-2">
+    <a class = "btn btn-primary" th:href="@{/projects/create/{userID}(userID=${user.userID})}">Create Project</a>
     <a class = "btn btn-secondary" th:href="@{/profile((userID=${user.userID}))}">Go Back</a>
   </div>
 </div>

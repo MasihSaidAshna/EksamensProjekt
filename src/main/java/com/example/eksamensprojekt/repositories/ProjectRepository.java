@@ -60,7 +60,7 @@ public class ProjectRepository {
     }
 
 
-    public void createProject(User user, Project project){
+    public boolean createProject(User user, Project project){
         try(Connection con = DBManager.getConnection()) {
             String SQL = "INSERT INTO project (projectName, deadline, uid) VALUES (?, STR_TO_DATE(?,'%Y-%m-%d'), (SELECT uid FROM user WHERE name = ?));";
             PreparedStatement pstmt = con.prepareStatement(SQL);
@@ -68,6 +68,7 @@ public class ProjectRepository {
             pstmt.setString(2, project.getDeadline().toString());
             pstmt.setString(3, user.getUserName());
             pstmt.execute();
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
