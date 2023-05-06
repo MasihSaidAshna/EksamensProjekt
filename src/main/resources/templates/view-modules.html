@@ -14,10 +14,8 @@
   </div>
   <table class="table table-bordered">
     <tr>
-      <th>Project name</th>
+      <th>Module name</th>
       <th>Project creator name</th>
-      <th>Deadline</th>
-      <th>Time left until deadline</th>
       <th>Actions</th>
     </tr>
     <tbody>
@@ -25,19 +23,17 @@
       <tr>
         <td>[[${project.getProjectName}]]</td>
         <td>[[${user.getUserName()}]]</td>
-        <td>[[${project.getDeadline}]]</td>
-        <td>[[${project.getTimeEstimate}]]</td>
         <td>
-          <a type="button" class="btn btn-primary" th:href="@{/view-modules.html/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
-          <a type="button" class="btn btn-success" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
-          <a type="button" class="btn btn-danger" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-trash-fill"></i> Delete Project</a>
+          <a type="button" class="btn btn-primary" th:href="@{/}"><i class="bi bi-eye-fill"></i> View Module</a>
+          <a type="button" class="btn btn-success" th:href="@{/modules/update/{moduleID}(moduleID=${project.getModuleID()})}"><i class="bi bi-pencil-square"></i> Update Module</a>
+          <a type="button" class="btn btn-danger" th:href="@{/modules/delete/{moduleID}(moduleID=${project.getModuleID()})}"><i class="bi bi-trash-fill"></i> Delete Module</a>
         </td>
       </tr>
     </th:block>
     </tbody>
   </table>
   <div class = "p-2">
-    <a class = "btn btn-primary" th:href="@{/projects/create/{userID}(userID=${session.user.userID})}">Create Project</a>
+    <a class = "btn btn-primary" th:href="@{/modules/create/{projectID}(projectID=${project.getProjectID()})}">Create Module</a>
     <a class = "btn btn-secondary" th:href="@{/profile((userID=${session.user.userID}))}">Go Back</a>
   </div>
 </div>
