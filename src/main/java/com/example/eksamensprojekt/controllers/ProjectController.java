@@ -29,31 +29,21 @@ public class ProjectController {
         model.addAttribute("userID", userID);
         model.addAttribute("user", user);
         model.addAttribute("projects", projects);
-        System.out.println(model);
         return "projects";
     }
 
 
     @GetMapping("/projects/create/{userID}")
-    public String createProject(@ModelAttribute("user") User user, Model model){
+    public String createProject(@PathVariable int userID, Model model){
         model.addAttribute("projectForm", new Project());
-        System.out.println(model);
         return "project-form";
     }
 
 
     @PostMapping("/projects/create/{userID}")
-    public String doCreateProject(@ModelAttribute("projectForm") Project Project, Model model) {
+    public String doCreateProject(@ModelAttribute("projectForm") Project project, Model model) {
         User user = (User) httpSession.getAttribute("user");
-        String projectName = Project.getProjectName();
-        LocalDate deadline = Project.getDeadline();
-
-        Project project = new Project();
-        project.setProjectName(projectName);
-        project.setDeadline(deadline);
-
         boolean success = projectService.createProject(user, project);
-
         if (success){
             return "redirect:/projects/{userID}";
         }

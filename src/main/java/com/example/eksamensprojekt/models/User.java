@@ -2,6 +2,12 @@ package com.example.eksamensprojekt.models;
 
 public class User {
 
+    public enum Role { //Needs to be implemented
+        ADMIN,
+        MODERATOR,
+        EMPLOYEE
+    }
+
     private int userID;
     private String userName;
     private String password;

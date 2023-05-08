@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.services;
 
+import com.example.eksamensprojekt.models.User;
 import org.springframework.stereotype.Service;
 import com.example.eksamensprojekt.models.Module;
 import com.example.eksamensprojekt.models.Project;
@@ -29,12 +30,16 @@ public class ModuleService {
     }
 
 
-    public void createModule(Project project, Module module){
-        moduleRepository.createModule(project, module);
+    public boolean createModule(User user, Project project, Module module){
+        return moduleRepository.createModule(user, project, module);
     }
 
 
-    public void updateModuleName(Project project, Module module, String name) {
+    public void updateModuleName(Project project, Module module, String name, LocalDate deadline, Module.Status status) {
+        moduleRepository.updateModule(project, module, name, deadline, status);
+    }
+
+/*    public void updateModuleName(Project project, Module module, String name) {
         moduleRepository.updateModuleName(project, module, name);
     }
 
@@ -46,7 +51,7 @@ public class ModuleService {
 
     public void updateModuleStatus(Project project, Module module, Module.Status status) {
         moduleRepository.updateModuleStatus(project, module, status);
-    }
+    }*/
 
 
     public void deleteModule(Project project, Module module) {

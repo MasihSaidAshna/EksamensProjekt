@@ -13,16 +13,22 @@ public class Module {
     }
 
     private int moduleID;
-    private String moduleName;
     private int projectID;
+    private int userID;
+    private String moduleName;
     private LocalDate deadline;
     private Period timeEstimate;
     private Status status;
 
-    public Module(int moduleID, String moduleName, int projectID, LocalDate deadline, Status status) {
+
+    public Module() {
+    }
+
+    public Module(int moduleID, int projectID, int userID, String moduleName, LocalDate deadline, Status status) {
         this.moduleID = moduleID;
-        this.moduleName = moduleName;
         this.projectID = projectID;
+        this.userID = userID;
+        this.moduleName = moduleName;
         this.deadline = deadline;
         this.timeEstimate = calculatePeriod();
         this.status = status;
@@ -36,12 +42,12 @@ public class Module {
         this.moduleID = moduleID;
     }
 
-    public String getModuleName() {
-        return moduleName;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public int getProjectID() {
@@ -50,6 +56,14 @@ public class Module {
 
     public void setProjectID(int projectID) {
         this.projectID = projectID;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 
     public LocalDate getDeadline() {
