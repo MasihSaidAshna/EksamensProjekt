@@ -2,8 +2,6 @@ package com.example.eksamensprojekt.repositories;
 
 import com.example.eksamensprojekt.models.Module;
 import com.example.eksamensprojekt.models.Project;
-import com.example.eksamensprojekt.models.User;
-import jdk.jshell.Snippet;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -28,9 +26,10 @@ public class ModuleRepository {
         ArrayList<Module> moduleArrayList = new ArrayList<>();
         Module module = null;
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM project JOIN module WHERE module.pid = ?";
+            String SQL = "SELECT * FROM project JOIN module WHERE project.pid = ? AND module.pid = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, project.getProjectID());
+            pstmt.setInt(2, project.getProjectID());
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int moduleID = rs.getInt("mid");

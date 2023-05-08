@@ -1,49 +1,47 @@
 h1 {
     font-size: 100px;
     text-align: center;
-    font-family: "Times New Roman";
     font-weight: bold;
-    color: royalblue;
+    /*color: royalblue;*/
+    color: #a6e3a1;
+    font-family: Consolas, serif;
 }
 
 .form-body {
     text-align: center;
-
 }
 
 body {
+    font-family: Consolas, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 80vh;
+    background-color: #24273a;;
+    /*background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");*/
 }
 
 .text-center {
-    color: royalblue;
+    /*color: royalblue;*/
     font-size: 70px;
     font-weight: bold;
-    font-family: "Times New Roman";
-
 }
 
 .form-group {
-    font-family: "Times New Roman";
     font-weight: bold;
-    color: black;
+    color: white;
 }
 
-body {
-    background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
-}
 
 .card {
-    border-color: royalblue;
-    border: 5px royalblue inset;
-    background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
+    /*border-color: royalblue;*/
+    border-color: #a6e3a1;
+    /*border: 5px royalblue inset;*/
+    background-color: #303446;
 }
 
-.card-body {
-    background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
+.btn.btn-primary {
+    background-color: #a6e3a1 !important;
 }
 

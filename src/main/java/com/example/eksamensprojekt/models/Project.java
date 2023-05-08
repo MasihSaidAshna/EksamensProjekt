@@ -1,7 +1,5 @@
 package com.example.eksamensprojekt.models;
 
-import org.springframework.boot.convert.PeriodFormat;
-
 import java.time.LocalDate;
 import java.time.Period;
 

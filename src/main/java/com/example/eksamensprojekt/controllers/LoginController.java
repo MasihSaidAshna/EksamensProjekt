@@ -13,15 +13,21 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final UserService userService;
-
-    public LoginController(UserService userService) {
+    private final HttpSession httpSession;
+    public LoginController(UserService userService, HttpSession httpSession) {
         this.userService = userService;
+        this.httpSession = httpSession;
     }
 
 
     @GetMapping("")
     public String showHomepage() {
         return "homepage";
+    }
+
+
+    public boolean isLoggedIn(){
+        return httpSession.getAttribute("user") != null;
     }
 
 
@@ -63,13 +69,13 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("user") UserDTO userDTO, HttpSession session, Model model) {
+    public String doLogin(@ModelAttribute("user") UserDTO userDTO, Model model) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userService.findUserByEmailAndPassword(email, password);
         if (user != null){
-            session.setAttribute("user", user);
-            session.setMaxInactiveInterval(60);
+            this.httpSession.setAttribute("user", user);
+            this.httpSession.setMaxInactiveInterval(60);
             if (user.getUserID() == 1){
                 return "redirect:/admin/profile";
             }
@@ -86,15 +92,13 @@ public class LoginController {
 
     @GetMapping("/admin/profile")
     public String showAdminProfile(){
-        return "admin-profile";
+        return isLoggedIn() ? "admin-profile" : "login";
     }
 
 
     @GetMapping("/profile")
-    public String showProfile(@RequestParam("userID") int userID, Model model){
-        User user = userService.fetchUser(userID);
-        model.addAttribute("user", user);
-        return "profile";
+    public String showProfile(){
+        return isLoggedIn() ? "profile" : "login";
     }
 
 

@@ -28,9 +28,11 @@
         <td>[[${project.getDeadline}]]</td>
         <td>[[${project.getTimeEstimate}]]</td>
         <td>
-          <a type="button" class="btn btn-primary" th:href="@{/view-modules.html/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
-          <a type="button" class="btn btn-success" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
-          <a type="button" class="btn btn-danger" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-trash-fill"></i> Delete Project</a>
+          <div class="btn-group ">
+            <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
+            <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
+            <a type="button" class="btn btn-danger btn-sm" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-trash-fill"></i> Delete Project</a>
+          </div>
         </td>
       </tr>
     </th:block>

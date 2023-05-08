@@ -1,8 +1,5 @@
 package com.example.eksamensprojekt.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
     private int userID;
