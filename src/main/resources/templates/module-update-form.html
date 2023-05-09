@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/default-stylesheet.css">
+  <title>Update Module</title>
+</head>
+<body>
+<div class="container text-center">
+  <h2>Please fill in the form to update the module</h2>
+  <form th:action="@{/modules/update/{projectID}(projectID=${project.projectID})/{moduleID}(moduleID=${moduleID})}" method="post">
+    <div class="form-group">
+      <label class="text-center">Module name</label>
+      <input type="text" name="projectName" th:placeholder="ModuleName" required/>
+    </div>
+    <div class="form-group">
+      <label class="text-center">Deadline</label>
+      <input type="date" name="deadline" th:placeholder="YYYY-MM-DD" required/>
+    </div>
+    <div class="form-group">
+      <label class="text-center">Status</label>
+      <select status="status" name="setstatus">
+        <option value="TO_DO">To Do</option>
+        <option value="DOING">Doing</option>
+        <option value="DROPPED">Dropped</option>
+        <option value="DONE">Done</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" >Update module</button>
+    </div>
+  </form>
+  <div class="card">
+    <a class = "btn btn-secondary" th:href="@{/modules/{projectID}(projectID=${project.projectID})}">Go Back</a>
+  </div>
+</div>
+</body>
+</html>

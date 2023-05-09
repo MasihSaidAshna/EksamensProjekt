@@ -25,8 +25,8 @@ public class ModuleService {
     }
 
 
-    public Module fetchModule(Project project, String name) {
-        return moduleRepository.fetchModule(project, name);
+    public Module fetchModule(Project project, int mid) {
+        return moduleRepository.fetchModule(project, mid);
     }
 
 
@@ -35,8 +35,8 @@ public class ModuleService {
     }
 
 
-    public void updateModuleName(Project project, Module module, String name, LocalDate deadline, Module.Status status) {
-        moduleRepository.updateModule(project, module, name, deadline, status);
+    public boolean updateModule(Project project, Module module) {
+        return moduleRepository.updateModule(project, module);
     }
 
 /*    public void updateModuleName(Project project, Module module, String name) {

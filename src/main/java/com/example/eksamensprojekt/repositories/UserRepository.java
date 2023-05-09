@@ -20,7 +20,8 @@ public class UserRepository {
                 String username = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                users.add(new User(ID, username, password, email));
+                User.Role role = User.Role.valueOf(rs.getString("role"));
+                users.add(new User(ID, username, password, email, role));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -40,7 +41,8 @@ public class UserRepository {
                 String username = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                return new User(userID, username, password, email);
+                User.Role role = User.Role.valueOf(rs.getString("role"));
+                return new User(userID, username, password, email, role);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -62,6 +64,7 @@ public class UserRepository {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setUserName(rs.getString("name"));
+                user.setRole((User.Role.valueOf(rs.getString("role"))));
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -72,12 +75,13 @@ public class UserRepository {
 
     public boolean createUser(User user){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO user(uid, name, password, email) VALUES(?, ?, ?, ?)";
+            String SQL = "INSERT INTO user(uid, name, password, email) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, user.getUserID());
             pstmt.setString(2, user.getUserName());
             pstmt.setString(3, user.getPassword());
             pstmt.setString(4, user.getEmail());
+            pstmt.setString(5, user.getRole().toString());
             pstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -86,14 +90,15 @@ public class UserRepository {
     }
 
 
-    public void editUser(int ID, String name, String password, String email) {
+    public void editUser(int ID, String name, String password, String email, User.Role role) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE user SET name = ?, password = ?, email = ? WHERE uid = ?;";
+            String SQL = "UPDATE user SET name = ?, password = ?, email = ?, role = ? WHERE uid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, name);
             pstmt.setString(2, password);
             pstmt.setString(3, email);
             pstmt.setInt(4, ID);
+            pstmt.setString(5, role.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

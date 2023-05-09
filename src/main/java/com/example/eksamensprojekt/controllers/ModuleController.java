@@ -32,6 +32,8 @@ public class ModuleController {
         User user = (User) httpSession.getAttribute("user");
         Project project = projectService.fetchProject(user, projectID);
         ArrayList<Module> modules = moduleService.getModules(project);
+        model.addAttribute("projectID", projectID);
+        model.addAttribute("project", project);
         model.addAttribute("modules", modules);
         return "view-modules";
     }
@@ -40,8 +42,6 @@ public class ModuleController {
 
     @GetMapping("/modules/create/{projectID}")
     public String createModule(@PathVariable int projectID, Model model){
-        /*User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user ,projectID);*/
         model.addAttribute("projectID", projectID);
         model.addAttribute("moduleForm", new Module());
         return "module-form";
@@ -53,7 +53,6 @@ public class ModuleController {
         User user = (User) httpSession.getAttribute("user");
         Project project = projectService.fetchProject(user, projectID);
         boolean success = moduleService.createModule(user, project, module);
-        //boolean success = moduleService.createModule(user, project, module);
         if (success){
             return "redirect:/modules/{projectID}";
         }
@@ -62,6 +61,49 @@ public class ModuleController {
             return "error";
         }
     }
+
+
+    @GetMapping("/modules/update/{projectID}/{moduleID}")
+    public String updateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, Model model){
+        User user = (User) httpSession.getAttribute("user");
+        Project project = projectService.fetchProject(user, projectID);
+        Module module = moduleService.fetchModule(project, moduleID);
+        model.addAttribute("moduleID", moduleID);
+        model.addAttribute("project", project);
+        model.addAttribute("moduleForm", module);
+        return "module-update-form";
+    }
+
+
+    @PostMapping("/modules/update/{projectID}/{moduleID}")
+    public String doUpdateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, @ModelAttribute("moduleForm") Module module, HttpSession httpSession, Model model) {
+        User user = (User) httpSession.getAttribute("user");
+        Project project = projectService.fetchProject(user, projectID);
+        String newModuleName = module.getModuleName();
+        LocalDate newModuleDeadline = module.getDeadline();
+        Module.Status newStatus = module.getStatus();
+        Module newModule = new Module(moduleID, projectID, user.getUserID(), newModuleName, newModuleDeadline, newStatus);
+
+        boolean success = moduleService.updateModule(project, newModule);
+        if (success){
+            return "redirect:/modules/{projectID}";
+        }
+        else {
+            model.addAttribute("errorMessage", "Failed to update module");
+            return "error";
+        }
+    }
+
+
+    @GetMapping("/modules/delete/{moduleID}")
+    public String deleteModule(@RequestParam("projectID") int projectID, @PathVariable("moduleID") int moduleID, HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        Project project = projectService.fetchProject(user, projectID);
+        Module module = moduleService.fetchModule(project, moduleID);
+        moduleService.deleteModule(project, module);
+        return "redirect:/modules/{projectID}";
+    }
+
 
 
 }

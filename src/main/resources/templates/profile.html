@@ -10,7 +10,19 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1>Welcome to your profile, <span th:text="${session.user.getUserName()}"></span></h1>
+    <div th:if="${session.user.getRole() == session.user.role.ADMIN}">
+        <h1>Welcome back, administrator</h1>
+    </div>
+    <div th:if="${session.user.getRole() == session.user.role.MANAGER}">
+        <h1>Welcome, manager <span th:text="${session.user.getUserName()}"></span></h1>
+    </div>
+    <div th:if="${session.user.getRole() == session.user.role.EMPLOYEE}">
+        <h1>Welcome, employee <span th:text="${session.user.getUserName()}"></span></h1>
+    </div>
+
+    <div class = "p-2" th:if="${session.user.getRole() == session.user.role.ADMIN}">
+        <a class = "btn btn-primary" th:href="@{/admin/users}">User List</a>
+    </div>
     <div class = "p-2">
         <a class = "btn btn-primary" th:href="@{/projects/{userID}(userID=${session.user.userID})}">See my projects</a>
     </div>

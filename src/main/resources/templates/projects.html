@@ -28,10 +28,13 @@
         <td>[[${project.getDeadline}]]</td>
         <td>[[${project.getTimeEstimate}]]</td>
         <td>
-          <div class="btn-group ">
+          <div class="btn-group " th:if="${session.user.getRole() == user.role.MANAGER}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
             <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
             <a type="button" class="btn btn-danger btn-sm" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-trash-fill"></i> Delete Project</a>
+          </div>
+          <div class="btn-group " th:if="${session.user.getRole() == user.role.EMPLOYEE}">
+            <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
           </div>
         </td>
       </tr>

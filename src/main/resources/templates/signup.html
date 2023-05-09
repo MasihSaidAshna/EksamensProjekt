@@ -13,6 +13,10 @@
     <h2>Signup</h2>
     <form th:action="@{/signup}" method="post">
         <div class="form-group">
+            <h3 class="text-center">User Role</h3>
+            <input type="text" name="role" th:placeholder="Role" required/>
+        </div>
+        <div class="form-group">
             <h3 class="text-center">Username</h3>
             <input type="text" name="username" th:placeholder="Username" required/>
         </div>

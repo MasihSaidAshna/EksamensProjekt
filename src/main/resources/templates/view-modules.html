@@ -33,8 +33,8 @@
           <td>
             <div class="btn-group ">
               <a type="button" class="btn btn-primary" th:href="@{/}"><i class="bi bi-eye-fill"></i> Assign to Module</a>
-              <a type="button" class="btn btn-success" th:href="@{/#}"><i class="bi bi-pencil-square"></i> Update Module</a>
-              <a type="button" class="btn btn-danger" th:href="@{/#}"><i class="bi bi-trash-fill"></i> Delete Module</a>
+              <a type="button" class="btn btn-success" th:href="@{/modules/update/{projectID}(projectID=${project.getProjectID()})/{moduleID}(moduleID=${module.getModuleID()})}"><i class="bi bi-pencil-square"></i> Update Module</a>
+              <a type="button" class="btn btn-danger" th:href="@{/modules/delete/{moduleID}(moduleID=${module.getModuleID()})}"><i class="bi bi-trash-fill"></i> Delete Module</a>
             </div>
           </td>
         </tr>

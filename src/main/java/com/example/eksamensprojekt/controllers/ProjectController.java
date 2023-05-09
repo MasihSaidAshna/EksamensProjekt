@@ -48,7 +48,7 @@ public class ProjectController {
             return "redirect:/projects/{userID}";
         }
         else {
-            model.addAttribute("errorMessage", "Failed to create user");
+            model.addAttribute("errorMessage", "Failed to create project");
             return "error";
         }
     }
@@ -74,7 +74,7 @@ public class ProjectController {
             return "redirect:/projects/" + user.getUserID();
         }
         else {
-            model.addAttribute("errorMessage", "Failed to create user");
+            model.addAttribute("errorMessage", "Failed to update project");
             return "error";
         }
     }
@@ -85,7 +85,7 @@ public class ProjectController {
         User user = (User) httpSession.getAttribute("user");
         Project project = projectService.fetchProject(user, projectID);
         projectService.deleteProject(user, project);
-        return "projects";
+        return "redirect:/projects/{userID}";
     }
 
 

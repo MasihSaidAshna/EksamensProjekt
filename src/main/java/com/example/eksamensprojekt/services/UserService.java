@@ -30,8 +30,8 @@ public class UserService {
         return userRepository.createUser(user);
     }
 
-    public void editUser(int ID, String name, String password, String email) {
-        userRepository.editUser(ID, name, password, email);
+    public void editUser(int ID, String name, String password, String email, User.Role role) {
+        userRepository.editUser(ID, name, password, email, role);
     }
 
     public void deleteUser(int userID) {

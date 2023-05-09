@@ -33,24 +33,21 @@ public class LoginController {
 
     @GetMapping("/signup")
     public String signup(Model model){
-        model.addAttribute("signupForm", new UserDTO());
+        model.addAttribute("signupForm", new User());
         return "signup";
     }
 
 
     @PostMapping("/signup")
-    public String doSignup(@ModelAttribute("signupForm") UserDTO userDTO, Model model) {
-        String username = userDTO.getUsername();
-        String email = userDTO.getEmail();
-        String password = userDTO.getPassword();
+    public String doSignup(@ModelAttribute("signupForm") User user, Model model) {
+        int uid = user.getUserID();
+        String username = user.getUserName();
+        String email = user.getEmail();
+        String password = user.getPassword();
+        User.Role role = user.getRole();
+        User userNew = new User(uid, username, email, password, role);
 
-        User user = new User();
-        user.setUserName(username);
-        user.setEmail(email);
-        user.setPassword(password);
-
-        boolean success = userService.createUser(user);
-
+        boolean success = userService.createUser(userNew);
         if (success){
             return "redirect:/login";
         }
@@ -69,30 +66,19 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("user") UserDTO userDTO, Model model) {
+    public String doLogin(@ModelAttribute("loginForm") UserDTO userDTO, Model model) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userService.findUserByEmailAndPassword(email, password);
         if (user != null){
             this.httpSession.setAttribute("user", user);
             this.httpSession.setMaxInactiveInterval(60);
-            if (user.getUserID() == 1){
-                return "redirect:/admin/profile";
-            }
-            else {
             return "redirect:/profile?userID=" + user.getUserID();
-            }
         }
         else {
             model.addAttribute("errorMessage", "Invalid email or password");
             return "login";
         }
-    }
-
-
-    @GetMapping("/admin/profile")
-    public String showAdminProfile(){
-        return isLoggedIn() ? "admin-profile" : "login";
     }
 
 
