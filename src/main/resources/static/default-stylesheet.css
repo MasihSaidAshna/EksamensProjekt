@@ -98,3 +98,7 @@ tbody, th, tr, td {
     border-color: royalblue;
     border: 5px royalblue inset;*/
 }
+
+.signup-form {
+    color: #a6e3a1;
+}
