@@ -65,11 +65,8 @@ public class ModuleController {
 
     @GetMapping("/modules/update/{projectID}/{moduleID}")
     public String updateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, Model model){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
-        Module module = moduleService.fetchModule(project, moduleID);
-        model.addAttribute("moduleID", moduleID);
-        model.addAttribute("project", project);
+        Module module = moduleService.fetchModule(projectID, moduleID);
+        model.addAttribute("projectID", projectID);
         model.addAttribute("moduleForm", module);
         return "module-update-form";
     }
@@ -78,13 +75,12 @@ public class ModuleController {
     @PostMapping("/modules/update/{projectID}/{moduleID}")
     public String doUpdateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, @ModelAttribute("moduleForm") Module module, HttpSession httpSession, Model model) {
         User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
         String newModuleName = module.getModuleName();
         LocalDate newModuleDeadline = module.getDeadline();
         Module.Status newStatus = module.getStatus();
         Module newModule = new Module(moduleID, projectID, user.getUserID(), newModuleName, newModuleDeadline, newStatus);
 
-        boolean success = moduleService.updateModule(project, newModule);
+        boolean success = moduleService.updateModule(newModule);
         if (success){
             return "redirect:/modules/{projectID}";
         }
@@ -95,12 +91,10 @@ public class ModuleController {
     }
 
 
-    @GetMapping("/modules/delete/{moduleID}")
-    public String deleteModule(@RequestParam("projectID") int projectID, @PathVariable("moduleID") int moduleID, HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
-        Module module = moduleService.fetchModule(project, moduleID);
-        moduleService.deleteModule(project, module);
+    @GetMapping("/modules/delete/{projectID}/{moduleID}")
+    public String deleteModule(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
+        Module module = moduleService.fetchModule(projectID, moduleID);
+        moduleService.deleteModule(module);
         return "redirect:/modules/{projectID}";
     }
 

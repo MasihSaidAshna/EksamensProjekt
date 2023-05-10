@@ -7,7 +7,7 @@ import java.time.Period;
 public class Project {
 
     private int projectID;
-    private int userID;
+    private int userID; //Foreign key
     private String projectName;
     private LocalDate deadline;
     private Period timeEstimate;

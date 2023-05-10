@@ -85,7 +85,7 @@ public class ProjectController {
         User user = (User) httpSession.getAttribute("user");
         Project project = projectService.fetchProject(user, projectID);
         projectService.deleteProject(user, project);
-        return "redirect:/projects/{userID}";
+        return "redirect:/projects/" + user.getUserID();
     }
 
 

@@ -13,8 +13,8 @@ public class UserRepository {
         ArrayList<User> users = new ArrayList<>();
         try (Connection con = DBManager.getConnection()) {
             String SQL = "SELECT * FROM productManagementToolDatabase.user;";
-            PreparedStatement pstmt = con.prepareStatement(SQL);
-            ResultSet rs = pstmt.executeQuery();
+            PreparedStatement pstmt = con.prepareStatement(SQL); //Fortæller programmet at det er en SQL statement
+            ResultSet rs = pstmt.executeQuery(); //Prepared statement vises i en tabel
             while (rs.next()) {
                 int ID = rs.getInt("uid");
                 String username = rs.getString("name");
@@ -52,30 +52,27 @@ public class UserRepository {
 
 
     public User findUserByEmailAndPassword(String email, String password) {
-        User user = null;
         try (Connection con = DBManager.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM user WHERE email=? AND password=?");
             stmt.setString(1, email);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                user = new User();
-                user.setUserID(rs.getInt("uid"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setUserName(rs.getString("name"));
-                user.setRole((User.Role.valueOf(rs.getString("role"))));
+                int uid = rs.getInt("uid");
+                String username = rs.getString("name");
+                User.Role role = User.Role.valueOf(rs.getString("role"));
+                return new User(uid, username, password, email, role);
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        return user;
+        return null;
     }
 
 
     public boolean createUser(User user){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO user(uid, name, password, email) VALUES(?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO user(uid, name, password, email, role) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, user.getUserID());
             pstmt.setString(2, user.getUserName());

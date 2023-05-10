@@ -42,10 +42,10 @@ public class LoginController {
     public String doSignup(@ModelAttribute("signupForm") User user, Model model) {
         int uid = user.getUserID();
         String username = user.getUserName();
-        String email = user.getEmail();
         String password = user.getPassword();
+        String email = user.getEmail();
         User.Role role = user.getRole();
-        User userNew = new User(uid, username, email, password, role);
+        User userNew = new User(uid, username, password, email, role);
 
         boolean success = userService.createUser(userNew);
         if (success){
@@ -60,15 +60,15 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model){
-        model.addAttribute("loginForm", new UserDTO());
+        model.addAttribute("loginForm", new User());
         return "login";
     }
 
 
     @PostMapping("/login")
-    public String doLogin(@ModelAttribute("loginForm") UserDTO userDTO, Model model) {
-        String email = userDTO.getEmail();
-        String password = userDTO.getPassword();
+    public String doLogin(@ModelAttribute("loginForm") User userModel, Model model) {
+        String email = userModel.getEmail();
+        String password = userModel.getPassword();
         User user = userService.findUserByEmailAndPassword(email, password);
         if (user != null){
             this.httpSession.setAttribute("user", user);
@@ -77,6 +77,7 @@ public class LoginController {
         }
         else {
             model.addAttribute("errorMessage", "Invalid email or password");
+            System.out.println(model);
             return "login";
         }
     }
@@ -89,11 +90,9 @@ public class LoginController {
 
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout() {
+        this.httpSession.invalidate();
         return "homepage";
     }
-
-
 
 }

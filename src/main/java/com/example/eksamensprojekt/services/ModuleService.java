@@ -25,8 +25,8 @@ public class ModuleService {
     }
 
 
-    public Module fetchModule(Project project, int mid) {
-        return moduleRepository.fetchModule(project, mid);
+    public Module fetchModule(int pid, int mid) {
+        return moduleRepository.fetchModule(pid, mid);
     }
 
 
@@ -35,8 +35,8 @@ public class ModuleService {
     }
 
 
-    public boolean updateModule(Project project, Module module) {
-        return moduleRepository.updateModule(project, module);
+    public boolean updateModule(Module module) {
+        return moduleRepository.updateModule(module);
     }
 
 /*    public void updateModuleName(Project project, Module module, String name) {
@@ -54,8 +54,8 @@ public class ModuleService {
     }*/
 
 
-    public void deleteModule(Project project, Module module) {
-        moduleRepository.deleteModule(project, module);
+    public void deleteModule(Module module) {
+        moduleRepository.deleteModule(module);
     }
 
 

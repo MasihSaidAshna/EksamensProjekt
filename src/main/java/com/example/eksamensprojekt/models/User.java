@@ -2,7 +2,7 @@ package com.example.eksamensprojekt.models;
 
 public class User {
 
-    public enum Role { //Needs to be implemented
+    public enum Role {
         ADMIN,
         MANAGER,
         EMPLOYEE

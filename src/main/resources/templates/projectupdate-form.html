@@ -12,11 +12,11 @@
   <form th:action="@{/projects/update/{projectID}(projectID=${projectForm.projectID})}" method="post">
     <div class="form-group">
       <label class="text-center">Project Name</label>
-      <input type="text" name="projectName" th:placeholder="ProjectName" required/>
+      <input type="text" th:field="*{projectForm.projectName}" th:placeholder="ProjectName" required/>
     </div>
     <div class="form-group">
       <label class="text-center">Deadline</label>
-      <input type="date" name="deadline" th:placeholder="YYYY-MM-DD" required/>
+      <input type="date" th:field="*{projectForm.deadline}" th:placeholder="YYYY-MM-DD" required/>
     </div>
     <div class="form-group">
       <button type="submit" >Update project</button>

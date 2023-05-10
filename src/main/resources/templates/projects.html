@@ -42,7 +42,7 @@
     </tbody>
   </table>
   <div class = "p-2">
-    <a class = "btn btn-primary" th:href="@{/projects/create/{userID}(userID=${session.user.userID})}">Create Project</a>
+    <a class = "btn btn-primary" th:if="${session.user.getRole() == user.role.MANAGER}" th:href="@{/projects/create/{userID}(userID=${session.user.userID})}">Create Project</a>
     <a class = "btn btn-secondary" th:href="@{/profile((userID=${session.user.userID}))}">Go Back</a>
   </div>
 </div>

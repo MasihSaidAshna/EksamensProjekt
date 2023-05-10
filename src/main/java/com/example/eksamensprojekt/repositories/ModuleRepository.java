@@ -45,12 +45,12 @@ public class ModuleRepository {
     }
 
 
-    public Module fetchModule(Project project, int mid) {
+    public Module fetchModule(int pid, int mid) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "SELECT * FROM module WHERE mid = ? AND module.pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, mid);
-            pstmt.setInt(2, project.getProjectID());
+            pstmt.setInt(2, pid);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int moduleID = rs.getInt("mid");
@@ -76,7 +76,6 @@ public class ModuleRepository {
             pstmt.setString(2, module.getDeadline().toString());
             module.setStatus(Module.Status.TO_DO);
             pstmt.setString(3, module.getStatus().toString());
-            System.out.println(module.getDeadline().toString());
             pstmt.setString(4, project.getProjectName());
             pstmt.setString(5, user.getUserName());
             pstmt.execute();
@@ -87,14 +86,14 @@ public class ModuleRepository {
     }
 
 
-    public boolean updateModule(Project project, Module newModule) {
+    public boolean updateModule(Module newModule) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE module SET moduleName = ?, deadline = ?, setstatus = ? WHERE pid = ? AND mid = ?;";
+            String SQL = "UPDATE module SET moduleName = ?, deadline = ?, setstatus = ? WHERE module.pid = ? AND mid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, newModule.getModuleName());
             pstmt.setDate(2, Date.valueOf(newModule.getDeadline()));
-            pstmt.setObject(3, newModule.getStatus());
-            pstmt.setInt(4, project.getProjectID());
+            pstmt.setString(3, newModule.getStatus().toString());
+            pstmt.setInt(4, newModule.getProjectID());
             pstmt.setInt(5, newModule.getModuleID());
             pstmt.executeUpdate();
             return true;
@@ -145,13 +144,13 @@ public class ModuleRepository {
     }*/
 
 
-    public void deleteModule(Project project, Module module) {
+    public void deleteModule(Module module) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "DELETE FROM module WHERE mid = ? AND moduleName = ? AND module.pid = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, module.getModuleID());
             pstmt.setString(2, module.getModuleName());
-            pstmt.setInt(3, project.getProjectID());
+            pstmt.setInt(3, module.getProjectID());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

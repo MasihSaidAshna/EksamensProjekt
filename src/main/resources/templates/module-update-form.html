@@ -7,24 +7,24 @@
   <title>Update Module</title>
 </head>
 <body>
-<div class="container text-center">
+<div class="container text-center" th:with="projectID=${moduleForm.getProjectID()}, moduleID=${moduleForm.getModuleID()}">
   <h2>Please fill in the form to update the module</h2>
-  <form th:action="@{/modules/update/{projectID}(projectID=${project.projectID})/{moduleID}(moduleID=${moduleID})}" method="post">
+  <form th:action="@{/modules/update/{projectID}/{moduleID}(projectID=${projectID},moduleID=${moduleForm.getModuleID()})}" method="post">
     <div class="form-group">
       <label class="text-center">Module name</label>
-      <input type="text" name="projectName" th:placeholder="ModuleName" required/>
+      <input type="text" th:field="*{moduleForm.moduleName}" th:placeholder="ModuleName" required/>
     </div>
     <div class="form-group">
       <label class="text-center">Deadline</label>
-      <input type="date" name="deadline" th:placeholder="YYYY-MM-DD" required/>
+      <input type="date" th:field="*{moduleForm.deadline}" th:placeholder="YYYY-MM-DD" required/>
     </div>
     <div class="form-group">
       <label class="text-center">Status</label>
-      <select status="status" name="setstatus">
-        <option value="TO_DO">To Do</option>
-        <option value="DOING">Doing</option>
-        <option value="DROPPED">Dropped</option>
-        <option value="DONE">Done</option>
+      <select th:field="*{moduleForm.Status}">
+        <option th:each="setstatus : ${T(com.example.eksamensprojekt.models.Module.Status).values()}"
+        th:value="${setstatus}"
+        th:text="${setstatus}">
+        </option>
       </select>
     </div>
     <div class="form-group">
@@ -32,7 +32,7 @@
     </div>
   </form>
   <div class="card">
-    <a class = "btn btn-secondary" th:href="@{/modules/{projectID}(projectID=${project.projectID})}">Go Back</a>
+    <a class = "btn btn-secondary" th:href="@{/modules/{projectID}(projectID=${projectID})}">Go Back</a>
   </div>
 </div>
 </body>
