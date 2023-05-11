@@ -1,19 +1,35 @@
 h1 {
-    color: #303446;
+    font-size: 40px;
+    text-align: center;
+    font-family: Consolas, sans-serif;
+    font-weight: bold;
+    color: #a6e3a1;
+    /*color: #303446;*/
+}
+
+p {
+    text-align: center;
+    font-family: Consolas, sans-serif;
+    font-weight: bold;
+    color: #a6e3a1;
 }
 
 .btn {
     margin-right: 10px;
 }
 
-body {
-    color: #303446; !important;
-
-
+nav, .navbar, .navbar-expand-lg, .navbar-light, .bg-light, .collapse .navbar-collapse .navbarNav {
+    font-family: Consolas, sans-serif;
+    font-weight: bold;
+    background-color: #303446; !important;
 }
 
-.btn {
-    color: #303446;
+body {
+    background-color: #24273a; !important;
+}
+
+.btn.btn-primary {
+    background-color: #a6e3a1 !important;
 }
 
 .card-body {
