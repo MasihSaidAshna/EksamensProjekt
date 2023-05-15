@@ -19,12 +19,13 @@ public class Module {
     private LocalDate deadline;
     private Period timeEstimate;
     private Status status;
+    private String assignUser;
 
 
     public Module() {
     }
 
-    public Module(int moduleID, int projectID, int userID, String moduleName, LocalDate deadline, Status status) {
+    public Module(int moduleID, int projectID, int userID, String moduleName, LocalDate deadline, Status status, String assignUser) {
         this.moduleID = moduleID;
         this.projectID = projectID;
         this.userID = userID;
@@ -32,6 +33,7 @@ public class Module {
         this.deadline = deadline;
         this.timeEstimate = calculatePeriod();
         this.status = status;
+        this.assignUser = assignUser;
     }
 
     public int getModuleID() {
@@ -86,6 +88,13 @@ public class Module {
         return Period.between(LocalDate.now(), deadline);
     }
 
+    public String getAssignUser() {
+        return assignUser;
+    }
+
+    public void setAssignUser(String assignUser) {
+        this.assignUser = assignUser;
+    }
 
     public String getTimeEstimate(){
         String years = timeEstimate.getYears() == 1 ? timeEstimate.getYears() + " year" : timeEstimate.getYears() + " years";

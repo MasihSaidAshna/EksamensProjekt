@@ -26,7 +26,7 @@ public class ProjectRepository {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int projectID = rs.getInt("pid");
-                String projectName = rs.getString("projectName");
+                String projectName = rs.getString("project_name");
                 int userID = rs.getInt("uid");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
                 Project project = new Project(projectID, userID, projectName, deadline);
@@ -48,7 +48,7 @@ public class ProjectRepository {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int userID = rs.getInt("uid");
-                String projectName = rs.getString("projectName");
+                String projectName = rs.getString("project_name");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
                 return new Project(projectID, userID, projectName, deadline);
             }
@@ -61,7 +61,7 @@ public class ProjectRepository {
 
     public boolean createProject(User user, Project project){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO project (projectName, deadline, uid) VALUES (?, STR_TO_DATE(?,'%Y-%m-%d'), (SELECT uid FROM user WHERE name = ?));";
+            String SQL = "INSERT INTO project (project_name, deadline, uid) VALUES (?, STR_TO_DATE(?,'%Y-%m-%d'), (SELECT uid FROM user WHERE name = ?));";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, project.getProjectName());
             pstmt.setString(2, project.getDeadline().toString());
@@ -76,7 +76,7 @@ public class ProjectRepository {
 
     public boolean updateProject(User user, Project project, String name, LocalDate deadline) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE project SET projectName = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE uid = ? AND pid = ?;";
+            String SQL = "UPDATE project SET project_name = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE uid = ? AND pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, name);
             pstmt.setString(2, deadline.toString());
@@ -92,7 +92,7 @@ public class ProjectRepository {
 
     public void deleteProject(User user, Project project) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "DELETE FROM project WHERE projectName = ? AND uid = ?";
+            String SQL = "DELETE FROM project WHERE project_name = ? AND uid = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, project.getProjectName());
             pstmt.setInt(2, user.getUserID());

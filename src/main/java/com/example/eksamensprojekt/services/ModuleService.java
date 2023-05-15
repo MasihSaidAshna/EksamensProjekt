@@ -39,23 +39,14 @@ public class ModuleService {
         return moduleRepository.updateModule(module);
     }
 
-/*    public void updateModuleName(Project project, Module module, String name) {
-        moduleRepository.updateModuleName(project, module, name);
-    }
-
-
-    public void updateModuleDeadline(Project project, Module module, LocalDate deadline) {
-        moduleRepository.updateModuleDeadline(project, module, deadline);
-    }
-
-
-    public void updateModuleStatus(Project project, Module module, Module.Status status) {
-        moduleRepository.updateModuleStatus(project, module, status);
-    }*/
-
 
     public void deleteModule(Module module) {
         moduleRepository.deleteModule(module);
+    }
+
+
+    public void assignUser(User user, Module module) {
+        moduleRepository.assignUser(user, module);
     }
 
 

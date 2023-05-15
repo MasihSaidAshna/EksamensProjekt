@@ -78,7 +78,8 @@ public class ModuleController {
         String newModuleName = module.getModuleName();
         LocalDate newModuleDeadline = module.getDeadline();
         Module.Status newStatus = module.getStatus();
-        Module newModule = new Module(moduleID, projectID, user.getUserID(), newModuleName, newModuleDeadline, newStatus);
+        String assignUser = "Unassigned";
+        Module newModule = new Module(moduleID, projectID, user.getUserID(), newModuleName, newModuleDeadline, newStatus, assignUser);
 
         boolean success = moduleService.updateModule(newModule);
         if (success){
@@ -98,6 +99,14 @@ public class ModuleController {
         return "redirect:/modules/{projectID}";
     }
 
+
+    @GetMapping("/modules/assign/{projectID}/{moduleID}")
+    public String assignUser(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
+        User user = (User) httpSession.getAttribute("user");
+        Module module = moduleService.fetchModule(projectID, moduleID);
+        moduleService.assignUser(user, module);
+        return "redirect:/modules/{projectID}";
+    }
 
 
 }
