@@ -15,6 +15,7 @@ CREATE TABLE user (
 CREATE TABLE project (
     pid INT NOT NULL AUTO_INCREMENT,
     project_name VARCHAR(255) NOT NULL,
+    project_creator VARCHAR(255),
     deadline date NOT NULL,
     uid INT NOT NULL,
     PRIMARY KEY (pid),
@@ -61,5 +62,10 @@ INSERT INTO module (module_name, deadline, set_status, pid, uid) VALUES
 INSERT INTO module (module_name, deadline, set_status, pid, uid) VALUES
     ('Some module', STR_TO_DATE('2023-05-31', '%Y-%m-%d'), 'TO_DO', (SELECT pid FROM project WHERE project_name = 'Clever program'), (SELECT uid FROM user WHERE name = 'Batman'));
 
+INSERT INTO module (module_name, deadline, set_status, pid, uid) VALUES
+    ('Some admin module', STR_TO_DATE('2023-06-30', '%Y-%m-%d'), 'DOING', (SELECT pid FROM project WHERE project_name = 'Program'), (SELECT uid FROM user WHERE name = 'Admin1'));
+
+-- Updating project_creator values
+UPDATE project JOIN user SET project_creator = user.name WHERE project.uid = user.uid;
 
 
