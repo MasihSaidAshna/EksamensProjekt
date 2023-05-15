@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import com.example.eksamensprojekt.models.*;
@@ -14,18 +15,22 @@ import java.util.ArrayList;
 @Controller
 public class ProjectController {
 
+    private final UserService userService;
     private final ProjectService projectService;
     private final HttpSession httpSession;
 
-    public ProjectController(ProjectService projectService, HttpSession httpSession) {
+    public ProjectController(UserService userService, ProjectService projectService, HttpSession httpSession) {
+        this.userService = userService;
         this.projectService = projectService;
         this.httpSession = httpSession;
     }
 
+
+
     @GetMapping("/projects/{userID}")
     public String getProjects(@PathVariable("userID") int userID, Model model) {
-        User user = (User) httpSession.getAttribute("user");
-        ArrayList<Project> projects = projectService.getProjects(user);
+        User user = userService.fetchUser(userID);
+        ArrayList<Project> projects = projectService.getProjects();
         model.addAttribute("userID", userID);
         model.addAttribute("user", user);
         model.addAttribute("projects", projects);
@@ -35,14 +40,15 @@ public class ProjectController {
 
     @GetMapping("/projects/create/{userID}")
     public String createProject(@PathVariable int userID, Model model){
+        model.addAttribute("userID", userID);
         model.addAttribute("projectForm", new Project());
         return "project-form";
     }
 
 
     @PostMapping("/projects/create/{userID}")
-    public String doCreateProject(@ModelAttribute("projectForm") Project project, Model model) {
-        User user = (User) httpSession.getAttribute("user");
+    public String doCreateProject(@ModelAttribute("projectForm") Project project, @ModelAttribute("userID") int uid, Model model) {
+        User user = userService.fetchUser(uid);
         boolean success = projectService.createProject(user, project);
         if (success){
             return "redirect:/projects/{userID}";
@@ -55,17 +61,18 @@ public class ProjectController {
 
 
     @GetMapping("/projects/update/{projectID}")
-    public String updateProject(@PathVariable("projectID") int projectID, Model model){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
+    public String updateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projects") ArrayList<Project> projects, Model model){
+        int uid = projectService.findUIDFromProject(projectID);
+        Project project = projectService.fetchProject(uid, projectID);
         model.addAttribute("projectForm", project);
         return "projectupdate-form";
     }
 
 
     @PostMapping("/projects/update/{projectID}")
-    public String doUpdateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projectForm") Project project, HttpSession httpSession, Model model) {
-        User user = (User) httpSession.getAttribute("user");
+    public String doUpdateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projectForm") Project project, Model model) {
+        int uid = projectService.findUIDFromProject(projectID);
+        User user = userService.fetchUser(uid);
         String newProjectName = project.getProjectName();
         LocalDate newProjectDeadline = project.getDeadline();
 
@@ -81,11 +88,11 @@ public class ProjectController {
 
 
     @GetMapping("/projects/delete/{projectID}")
-    public String deleteProject(@PathVariable("projectID") int projectID, HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
-        Project project = projectService.fetchProject(user, projectID);
-        projectService.deleteProject(user, project);
-        return "redirect:/projects/" + user.getUserID();
+    public String deleteProject(@PathVariable("projectID") int projectID){
+        int uid = projectService.findUIDFromProject(projectID);
+        Project project = projectService.fetchProject(uid, projectID);
+        projectService.deleteProject(uid, project);
+        return "redirect:/projects/" + uid;
     }
 
 

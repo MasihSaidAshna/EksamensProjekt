@@ -9,16 +9,18 @@ public class Project {
     private int projectID;
     private int userID; //Foreign key
     private String projectName;
+    private String projectCreator;
     private LocalDate deadline;
     private Period timeEstimate;
 
     public Project() {
     }
 
-    public Project(int projectID, int userID, String projectName, LocalDate deadline) {
+    public Project(int projectID, int userID, String projectName, String projectCreator, LocalDate deadline) {
         this.projectID = projectID;
         this.userID = userID;
         this.projectName = projectName;
+        this.projectCreator = projectCreator;
         this.deadline = deadline;
         this.timeEstimate = calculatePeriod();
     }
@@ -46,6 +48,14 @@ public class Project {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getProjectCreator() {
+        return projectCreator;
+    }
+
+    public void setProjectCreator(String projectCreator) {
+        this.projectCreator = projectCreator;
     }
 
     public LocalDate getDeadline() {

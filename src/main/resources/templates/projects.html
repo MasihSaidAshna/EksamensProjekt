@@ -24,11 +24,11 @@
     <th:block th:each="project : ${projects}">
       <tr>
         <td>[[${project.getProjectName}]]</td>
-        <td>[[${user.getUserName()}]]</td>
+        <td>[[${project.getProjectCreator()}]]</td>
         <td>[[${project.getDeadline}]]</td>
         <td>[[${project.getTimeEstimate}]]</td>
         <td>
-          <div class="btn-group " th:if="${session.user.getRole() == user.role.MANAGER}">
+          <div class="btn-group " th:if="${session.user.getRole() == user.role.MANAGER || session.user.getRole() == user.role.ADMIN}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
             <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
             <a type="button" class="btn btn-danger btn-sm" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-trash-fill"></i> Delete Project</a>
@@ -42,7 +42,7 @@
     </tbody>
   </table>
   <div class = "p-2">
-    <a class = "btn btn-primary" th:if="${session.user.getRole() == user.role.MANAGER}" th:href="@{/projects/create/{userID}(userID=${session.user.userID})}">Create Project</a>
+    <a class = "btn btn-primary" th:if="${session.user.getRole() == user.role.MANAGER || session.user.getRole() == user.role.ADMIN}" th:href="@{/projects/create/{userID}(userID=${session.user.userID})}">Create Project</a>
     <a class = "btn btn-secondary" th:href="@{/profile((userID=${session.user.userID}))}">Go Back</a>
   </div>
 </div>
