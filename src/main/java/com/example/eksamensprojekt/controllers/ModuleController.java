@@ -88,9 +88,10 @@ public class ModuleController {
 
         String newModuleName = module.getModuleName();
         LocalDate newModuleDeadline = module.getDeadline();
+        int newTimeEstimate = module.getTimeEstimate();
         Module.Status newStatus = module.getStatus();
         String assignUser = "Unassigned";
-        Module newModule = new Module(moduleID, projectID, uid, newModuleName, newModuleDeadline, newStatus, assignUser);
+        Module newModule = new Module(moduleID, projectID, uid, newModuleName, newModuleDeadline, newTimeEstimate, newStatus, assignUser);
 
         boolean success = moduleService.updateModule(newModule);
         if (success){

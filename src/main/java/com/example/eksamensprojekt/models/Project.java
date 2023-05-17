@@ -11,18 +11,20 @@ public class Project {
     private String projectName;
     private String projectCreator;
     private LocalDate deadline;
-    private Period timeEstimate;
+    private Period timePeriod;
+    private int timeEstimate;
 
     public Project() {
     }
 
-    public Project(int projectID, int userID, String projectName, String projectCreator, LocalDate deadline) {
+    public Project(int projectID, int userID, String projectName, String projectCreator, LocalDate deadline, int timeEstimate) {
         this.projectID = projectID;
         this.userID = userID;
         this.projectName = projectName;
         this.projectCreator = projectCreator;
         this.deadline = deadline;
-        this.timeEstimate = calculatePeriod();
+        this.timePeriod = calculatePeriod();
+        this.timeEstimate = timeEstimate;
     }
 
 
@@ -71,10 +73,10 @@ public class Project {
     }
 
 
-    public String getTimeEstimate(){
-        String years = timeEstimate.getYears() == 1 ? timeEstimate.getYears() + " year" : timeEstimate.getYears() + " years";
-        String months = timeEstimate.getMonths() == 1 ? timeEstimate.getMonths() + " month" : timeEstimate.getMonths() + " months";
-        String days = timeEstimate.getDays() == 1 ? timeEstimate.getDays() + " day" : timeEstimate.getDays() + " days";
+    public String getTimePeriod(){
+        String years = timePeriod.getYears() == 1 ? timePeriod.getYears() + " year" : timePeriod.getYears() + " years";
+        String months = timePeriod.getMonths() == 1 ? timePeriod.getMonths() + " month" : timePeriod.getMonths() + " months";
+        String days = timePeriod.getDays() == 1 ? timePeriod.getDays() + " day" : timePeriod.getDays() + " days";
         String retval = String.format("Deadline is %s, %s, %s from now.",
             years, months, days);
         if (retval.contains("0 years,")){
@@ -86,8 +88,11 @@ public class Project {
         return retval;
     }
 
-    public void setTimeEstimate(Period timeEstimate) {
-        this.timeEstimate = timeEstimate;
+    public void setTimePeriod(Period timePeriod) {
+        this.timePeriod = timePeriod;
     }
 
+    public int getTimeEstimate() {
+        return timeEstimate;
+    }
 }

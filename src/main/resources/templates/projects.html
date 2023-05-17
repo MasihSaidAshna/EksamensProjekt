@@ -44,6 +44,7 @@
       <th>Project creator name</th>
       <th>Deadline</th>
       <th>Time left until deadline</th>
+      <th>Project's total time estimate</th>
       <th>Actions</th>
     </tr>
     <tbody>
@@ -52,7 +53,8 @@
         <td>[[${project.getProjectName}]]</td>
         <td>[[${project.getProjectCreator()}]]</td>
         <td>[[${project.getDeadline}]]</td>
-        <td>[[${project.getTimeEstimate}]]</td>
+        <td>[[${project.getTimePeriod()}]]</td>
+        <td>[[${project.getTimeEstimate()}]] hours</td>
         <td>
           <div class="btn-group " th:if="${session.user.getRole() == session.user.role.MANAGER || session.user.getRole() == session.user.role.ADMIN}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>

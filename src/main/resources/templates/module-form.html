@@ -19,6 +19,10 @@
         <input type="date" th:field="*{moduleForm.deadline}" th:attr="min=${now}" th:max="${project.getDeadline()}" th:placeholder="YYYY-MM-DD" required/>
       </div>
       <div class="form-group">
+        <label class="text-center">Module time estimate</label>
+        <input type="number" th:field="*{moduleForm.timeEstimate}" th:placeholder="Duration" required/>
+      </div>
+      <div class="form-group">
         <button type="submit" >Create module</button>
       </div>
     </form>

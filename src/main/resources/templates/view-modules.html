@@ -45,6 +45,7 @@
         <th>Module status</th>
         <th>Deadline</th>
         <th>Time left until deadline</th>
+        <th>Time estimate</th>
         <th>Actions</th>
       </tr>
       <tbody>
@@ -54,7 +55,8 @@
           <td>[[${module.getAssignUser()}]]</td>
           <td>[[${module.getStatus()}]]</td>
           <td>[[${module.getDeadline()}]]</td>
-          <td>[[${module.getTimeEstimate()}]]</td>
+          <td>[[${module.getTimePeriod()}]]</td>
+          <td>[[${module.getTimeEstimate()}]] hours</td>
           <td th:with="projectID=${module.getProjectID()}, moduleID=${module.getModuleID()}">
             <div class="btn-group">
               <a type="button" class="btn btn-primary" th:href="@{/modules/assign/{projectID}/{moduleID}(projectID=${projectID},moduleID=${moduleID})}"><i class="bi bi-eye-fill"></i> Assign to Module</a>

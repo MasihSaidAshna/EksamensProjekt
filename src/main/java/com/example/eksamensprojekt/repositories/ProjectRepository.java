@@ -24,8 +24,9 @@ public class ProjectRepository {
                 String projectName = rs.getString("project_name");
                 String projectCreator = rs.getString("project_creator");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                int timeEstimate = rs.getInt("time_estimate");
                 int userID = rs.getInt("uid");
-                Project project = new Project(projectID, userID, projectName, projectCreator, deadline);
+                Project project = new Project(projectID, userID, projectName, projectCreator, deadline, timeEstimate);
                 projectArrayList.add(project);
             }
         } catch (SQLException e) {
@@ -46,7 +47,8 @@ public class ProjectRepository {
                 String projectName = rs.getString("project_name");
                 String projectCreator = rs.getString("project_creator");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
-                return new Project(projectID, uid, projectName, projectCreator, deadline);
+                int timeEstimate = rs.getInt("time_estimate");
+                return new Project(projectID, uid, projectName, projectCreator, deadline, timeEstimate);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

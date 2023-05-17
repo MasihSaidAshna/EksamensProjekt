@@ -23,7 +23,7 @@ public class ModuleRepository {
         ArrayList<Module> moduleArrayList = new ArrayList<>();
         Module module = null;
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT project.pid, project_name, mid, module_name, module.deadline, set_status, assign_user, module.pid, module.uid FROM project JOIN module WHERE module.pid = ? AND project_name = ?;";
+            String SQL = "SELECT project.pid, project_name, mid, module_name, module.deadline, module.time_estimate, set_status, assign_user, module.pid, module.uid FROM project JOIN module WHERE module.pid = ? AND project_name = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, project.getProjectID());
             pstmt.setString(2, project.getProjectName());
@@ -34,9 +34,10 @@ public class ModuleRepository {
                 int userID = rs.getInt("uid");
                 String moduleName = rs.getString("module_name");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                int timeEstimate = rs.getInt("time_estimate");
                 Module.Status status = Module.Status.valueOf(rs.getString("set_status"));
                 String assignUser = rs.getString("assign_user");
-                module = new Module(moduleID, projectID, userID, moduleName, deadline, status, assignUser);
+                module = new Module(moduleID, projectID, userID, moduleName, deadline, timeEstimate, status, assignUser);
                 moduleArrayList.add(module);
             }
         } catch (SQLException e) {
@@ -59,9 +60,10 @@ public class ModuleRepository {
                 int projectID = rs.getInt("pid");
                 String moduleName = rs.getString("module_name");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                int timeEstimate = rs.getInt("time_estimate");
                 Module.Status status = Module.Status.valueOf(rs.getString("set_status"));
                 String assignUser = rs.getString("assign_user");
-                return new Module(moduleID, projectID, userID, moduleName, deadline, status, assignUser);
+                return new Module(moduleID, projectID, userID, moduleName, deadline, timeEstimate, status, assignUser);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -72,15 +74,17 @@ public class ModuleRepository {
 
     public boolean createModule(User user, Project project, Module module){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO module (module_name, deadline, set_status, pid, uid) VALUES (?, STR_TO_DATE(?, '%Y-%m-%d'), ?, (SELECT pid FROM project WHERE project_name = ?), (SELECT uid FROM user WHERE name = ?));";
+            String SQL = "INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES (?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, (SELECT pid FROM project WHERE project_name = ?), (SELECT uid FROM user WHERE name = ?));";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, module.getModuleName());
             pstmt.setString(2, module.getDeadline().toString());
+            pstmt.setInt(3, module.getTimeEstimate());
             module.setStatus(Module.Status.TO_DO);
-            pstmt.setString(3, module.getStatus().toString());
-            pstmt.setString(4, project.getProjectName());
-            pstmt.setString(5, user.getUserName());
+            pstmt.setString(4, module.getStatus().toString());
+            pstmt.setString(5, project.getProjectName());
+            pstmt.setString(6, user.getUserName());
             pstmt.execute();
+            updateProjectTimeEstimate();
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -90,14 +94,16 @@ public class ModuleRepository {
 
     public boolean updateModule(Module newModule) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE module SET module_name = ?, deadline = ?, set_status = ? WHERE module.pid = ? AND mid = ?;";
+            String SQL = "UPDATE module SET module_name = ?, deadline = ?, time_estimate = ?, set_status = ? WHERE module.pid = ? AND mid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, newModule.getModuleName());
             pstmt.setDate(2, Date.valueOf(newModule.getDeadline()));
-            pstmt.setString(3, newModule.getStatus().toString());
-            pstmt.setInt(4, newModule.getProjectID());
-            pstmt.setInt(5, newModule.getModuleID());
+            pstmt.setInt(3, newModule.getTimeEstimate());
+            pstmt.setString(4, newModule.getStatus().toString());
+            pstmt.setInt(5, newModule.getProjectID());
+            pstmt.setInt(6, newModule.getModuleID());
             pstmt.executeUpdate();
+            updateProjectTimeEstimate();
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -112,6 +118,7 @@ public class ModuleRepository {
             pstmt.setInt(1, mid);
             pstmt.setInt(2, pid);
             pstmt.executeUpdate();
+            updateProjectTimeEstimate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -125,6 +132,17 @@ public class ModuleRepository {
             pstmt.setString(1, user.getUserName());
             pstmt.setInt(2, module.getProjectID());
             pstmt.setInt(3, module.getModuleID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void updateProjectTimeEstimate() {
+        try(Connection con = DBManager.getConnection()) {
+            String SQL = "UPDATE project SET time_estimate = (SELECT SUM(time_estimate) FROM module WHERE module.pid = project.pid);";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

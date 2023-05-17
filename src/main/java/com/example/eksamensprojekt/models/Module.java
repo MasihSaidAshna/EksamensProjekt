@@ -17,7 +17,8 @@ public class Module {
     private int userID;
     private String moduleName;
     private LocalDate deadline;
-    private Period timeEstimate;
+    private Period timePeriod;
+    private int timeEstimate;
     private Status status;
     private String assignUser;
 
@@ -25,13 +26,14 @@ public class Module {
     public Module() {
     }
 
-    public Module(int moduleID, int projectID, int userID, String moduleName, LocalDate deadline, Status status, String assignUser) {
+    public Module(int moduleID, int projectID, int userID, String moduleName, LocalDate deadline,  int timeEstimate, Status status, String assignUser) {
         this.moduleID = moduleID;
         this.projectID = projectID;
         this.userID = userID;
         this.moduleName = moduleName;
         this.deadline = deadline;
-        this.timeEstimate = calculatePeriod();
+        this.timePeriod = calculatePeriod();
+        this.timeEstimate = timeEstimate;
         this.status = status;
         this.assignUser = assignUser;
     }
@@ -96,10 +98,10 @@ public class Module {
         this.assignUser = assignUser;
     }
 
-    public String getTimeEstimate(){
-        String years = timeEstimate.getYears() == 1 ? timeEstimate.getYears() + " year" : timeEstimate.getYears() + " years";
-        String months = timeEstimate.getMonths() == 1 ? timeEstimate.getMonths() + " month" : timeEstimate.getMonths() + " months";
-        String days = timeEstimate.getDays() == 1 ? timeEstimate.getDays() + " day" : timeEstimate.getDays() + " days";
+    public String getTimePeriod(){
+        String years = timePeriod.getYears() == 1 ? timePeriod.getYears() + " year" : timePeriod.getYears() + " years";
+        String months = timePeriod.getMonths() == 1 ? timePeriod.getMonths() + " month" : timePeriod.getMonths() + " months";
+        String days = timePeriod.getDays() == 1 ? timePeriod.getDays() + " day" : timePeriod.getDays() + " days";
         String retval = String.format("Deadline is %s, %s, %s from now.",
                 years, months, days);
         if (retval.contains("0 years,")){
@@ -111,8 +113,15 @@ public class Module {
         return retval;
     }
 
-    public void setTimeEstimate(Period timeEstimate) {
-        this.timeEstimate = timeEstimate;
+    public void setTimePeriod(Period timePeriod) {
+        this.timePeriod = timePeriod;
     }
 
+    public int getTimeEstimate() {
+        return timeEstimate;
+    }
+
+    public void setTimeEstimate(int timeEstimate) {
+        this.timeEstimate = timeEstimate;
+    }
 }
