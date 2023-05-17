@@ -9,6 +9,30 @@
     <title>Profile</title>
 </head>
 <body>
+<div>
+    <nav class="navbar navbar-expand-lg header">
+        <a class="navbar-brand" th:href="@{/}">Project Management Tool</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-danger" th:href="@{/logout}">Log out</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-secondary" th:href="@{/signup}">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
 <div class="container-fluid text-center">
     <div th:if="${session.user.getRole() == session.user.role.ADMIN}">
         <h1>Welcome back, administrator</h1>
@@ -24,7 +48,7 @@
         <a class = "btn btn-primary" th:href="@{/admin/users}">User List</a>
     </div>
     <div class = "p-2">
-        <a class = "btn btn-primary" th:href="@{/projects/{userID}(userID=${session.user.userID})}">See my projects</a>
+        <a class = "btn btn-primary" th:href="@{/projects/{userID}(userID=${session.user.userID})}">See projects</a>
     </div>
     <div class = "p-2">
         <a class = "btn btn-danger" th:href="@{/logout}">Log out</a>

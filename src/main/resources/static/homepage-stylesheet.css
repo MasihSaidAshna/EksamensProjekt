@@ -18,14 +18,32 @@ p {
     margin-right: 10px;
 }
 
-nav, .navbar, .navbar-expand-lg, .navbar-light, .bg-light, .collapse .navbar-collapse .navbarNav {
+nav, .navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px;
     font-family: Consolas, sans-serif;
     font-weight: bold;
+    text-align: center;
     background-color: #303446; !important;
+    color: white; !important;
+}
+
+.navbar-brand, .nav-link, .navbar-nav{
+    font-family: Consolas, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background-color: #303446; !important;
+    color: white; !important;
 }
 
 body {
-    background-color: #24273a; !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #24273a;
 }
 
 .btn.btn-primary {

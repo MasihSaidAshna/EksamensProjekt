@@ -18,27 +18,26 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public int findUIDFromProject(int pid){return projectRepository.findUIDFromProject(pid);}
 
     public ArrayList<Project> getProjects() {
         return projectRepository.getProjects();
     }
 
 
-    public Project fetchProject(int uid, int pid) {
-        return projectRepository.fetchProject(uid, pid);
+    public Project fetchProject(int pid) {
+        return projectRepository.fetchProject(pid);
     }
 
     public boolean createProject(User user, Project project){
         return projectRepository.createProject(user, project);
     }
 
-    public boolean updateProject(User user, Project project, String name, LocalDate deadline) {
-        return projectRepository.updateProject(user, project, name, deadline);
+    public boolean updateProject(int pid, String name, LocalDate deadline) {
+        return projectRepository.updateProject(pid, name, deadline);
     }
 
-    public void deleteProject(int uid, Project project) {
-        projectRepository.deleteProject(uid, project);
+    public void deleteProject(int pid) {
+        projectRepository.deleteProject(pid);
     }
 
 }

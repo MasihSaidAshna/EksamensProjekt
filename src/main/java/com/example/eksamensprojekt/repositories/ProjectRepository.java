@@ -13,18 +13,6 @@ public class ProjectRepository {
     }
 
 
-    public int findUIDFromProject(int pid) {
-        ArrayList<Project> projects = getProjects();
-        int uid = 0;
-        for (Project p : projects){
-            if (p.getProjectID() == pid){
-                uid = p.getUserID();
-            }
-        }
-        return uid;
-    }
-
-
     public ArrayList<Project> getProjects() {
         ArrayList<Project> projectArrayList = new ArrayList<>();
         try(Connection con = DBManager.getConnection()) {
@@ -47,12 +35,11 @@ public class ProjectRepository {
     }
 
 
-    public Project fetchProject(int userID, int projectID) {
+    public Project fetchProject(int projectID) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM project WHERE pid = ? AND project.uid = ?;";
+            String SQL = "SELECT * FROM project WHERE pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, projectID);
-            pstmt.setInt(2, userID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int uid = rs.getInt("uid");
@@ -84,14 +71,13 @@ public class ProjectRepository {
     }
 
 
-    public boolean updateProject(User user, Project project, String name, LocalDate deadline) {
+    public boolean updateProject(int pid, String projectName, LocalDate deadline) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "UPDATE project SET project_name = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE uid = ? AND pid = ?;";
+            String SQL = "UPDATE project SET project_name = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE pid = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1, name);
+            pstmt.setString(1, projectName);
             pstmt.setString(2, deadline.toString());
-            pstmt.setInt(3, user.getUserID());
-            pstmt.setInt(4, project.getProjectID());
+            pstmt.setInt(3, pid);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -100,12 +86,11 @@ public class ProjectRepository {
     }
 
 
-    public void deleteProject(int uid, Project project) {
+    public void deleteProject(int pid) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "DELETE FROM project WHERE project_name = ? AND uid = ?";
+            String SQL = "DELETE FROM project WHERE pid = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1, project.getProjectName());
-            pstmt.setInt(2, uid);
+            pstmt.setInt(1, pid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

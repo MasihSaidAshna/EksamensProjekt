@@ -32,8 +32,7 @@ public class ModuleController {
 
     @GetMapping("/modules/{projectID}")
     public String getModules(@PathVariable("projectID") int projectID, Model model) {
-        int uid = projectService.findUIDFromProject(projectID);
-        Project project = projectService.fetchProject(uid, projectID);
+        Project project = projectService.fetchProject(projectID);
         ArrayList<Module> modules = moduleService.getModules(project);
         model.addAttribute("projectID", projectID);
         model.addAttribute("project", project);
@@ -45,7 +44,11 @@ public class ModuleController {
 
     @GetMapping("/modules/create/{projectID}")
     public String createModule(@PathVariable int projectID, Model model){
+        Project project = projectService.fetchProject(projectID);
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);
         model.addAttribute("projectID", projectID);
+        model.addAttribute("project", project);
         model.addAttribute("moduleForm", new Module());
         return "module-form";
     }
@@ -53,9 +56,8 @@ public class ModuleController {
 
     @PostMapping("/modules/create/{projectID}")
     public String doCreateModule(@PathVariable int projectID, @ModelAttribute("moduleForm") Module module, Model model) {
-        int uid = projectService.findUIDFromProject(projectID);
-        User user = userService.fetchUser(uid);
-        Project project = projectService.fetchProject(user.getUserID(), projectID);
+        Project project = projectService.fetchProject(projectID);
+        User user = userService.fetchUser(project.getUserID());
         boolean success = moduleService.createModule(user, project, module);
         if (success){
             return "redirect:/modules/{projectID}";
@@ -70,7 +72,11 @@ public class ModuleController {
     @GetMapping("/modules/update/{projectID}/{moduleID}")
     public String updateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, Model model){
         Module module = moduleService.fetchModule(projectID, moduleID);
+        Project project = projectService.fetchProject(projectID);
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);
         model.addAttribute("projectID", projectID);
+        model.addAttribute("project", project);
         model.addAttribute("moduleForm", module);
         return "module-update-form";
     }
@@ -78,7 +84,8 @@ public class ModuleController {
 
     @PostMapping("/modules/update/{projectID}/{moduleID}")
     public String doUpdateModule(@PathVariable("moduleID") int moduleID, @PathVariable("projectID") int projectID, @ModelAttribute("moduleForm") Module module, Model model) {
-        int uid = projectService.findUIDFromProject(projectID);
+        int uid = projectService.fetchProject(projectID).getUserID();
+
         String newModuleName = module.getModuleName();
         LocalDate newModuleDeadline = module.getDeadline();
         Module.Status newStatus = module.getStatus();
@@ -98,8 +105,7 @@ public class ModuleController {
 
     @GetMapping("/modules/delete/{projectID}/{moduleID}")
     public String deleteModule(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
-        Module module = moduleService.fetchModule(projectID, moduleID);
-        moduleService.deleteModule(module);
+        moduleService.deleteModule(moduleID, projectID);
         return "redirect:/modules/{projectID}";
     }
 

@@ -40,6 +40,8 @@ public class ProjectController {
 
     @GetMapping("/projects/create/{userID}")
     public String createProject(@PathVariable int userID, Model model){
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);
         model.addAttribute("userID", userID);
         model.addAttribute("projectForm", new Project());
         return "project-form";
@@ -62,8 +64,9 @@ public class ProjectController {
 
     @GetMapping("/projects/update/{projectID}")
     public String updateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projects") ArrayList<Project> projects, Model model){
-        int uid = projectService.findUIDFromProject(projectID);
-        Project project = projectService.fetchProject(uid, projectID);
+        Project project = projectService.fetchProject(projectID);
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);
         model.addAttribute("projectForm", project);
         return "projectupdate-form";
     }
@@ -71,14 +74,12 @@ public class ProjectController {
 
     @PostMapping("/projects/update/{projectID}")
     public String doUpdateProject(@PathVariable("projectID") int projectID, @ModelAttribute("projectForm") Project project, Model model) {
-        int uid = projectService.findUIDFromProject(projectID);
-        User user = userService.fetchUser(uid);
         String newProjectName = project.getProjectName();
         LocalDate newProjectDeadline = project.getDeadline();
 
-        boolean success = projectService.updateProject(user, project, newProjectName, newProjectDeadline);
+        boolean success = projectService.updateProject(projectID, newProjectName, newProjectDeadline);
         if (success){
-            return "redirect:/projects/" + user.getUserID();
+            return "redirect:/projects/" + project.getUserID();
         }
         else {
             model.addAttribute("errorMessage", "Failed to update project");
@@ -89,9 +90,9 @@ public class ProjectController {
 
     @GetMapping("/projects/delete/{projectID}")
     public String deleteProject(@PathVariable("projectID") int projectID){
-        int uid = projectService.findUIDFromProject(projectID);
-        Project project = projectService.fetchProject(uid, projectID);
-        projectService.deleteProject(uid, project);
+        Project project = projectService.fetchProject(projectID);
+        int uid = project.getUserID();
+        projectService.deleteProject(projectID);
         return "redirect:/projects/" + uid;
     }
 

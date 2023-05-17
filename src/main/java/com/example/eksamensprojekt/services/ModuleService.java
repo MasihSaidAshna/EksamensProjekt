@@ -40,8 +40,8 @@ public class ModuleService {
     }
 
 
-    public void deleteModule(Module module) {
-        moduleRepository.deleteModule(module);
+    public void deleteModule(int mid, int pid) {
+        moduleRepository.deleteModule(mid, pid);
     }
 
 

@@ -13,8 +13,8 @@ public class UserRepository {
         ArrayList<User> users = new ArrayList<>();
         try (Connection con = DBManager.getConnection()) {
             String SQL = "SELECT * FROM productManagementToolDatabase.user;";
-            PreparedStatement pstmt = con.prepareStatement(SQL); //Fortæller programmet at det er en SQL statement
-            ResultSet rs = pstmt.executeQuery(); //Prepared statement vises i en tabel
+            PreparedStatement pstmt = con.prepareStatement(SQL);    //Fortæller programmet at det er en SQL statement
+            ResultSet rs = pstmt.executeQuery();    //Prepared statement vises i en tabel: resultset
             while (rs.next()) {
                 int ID = rs.getInt("uid");
                 String username = rs.getString("name");

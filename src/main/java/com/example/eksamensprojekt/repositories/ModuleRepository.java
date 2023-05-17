@@ -105,13 +105,12 @@ public class ModuleRepository {
     }
 
 
-    public void deleteModule(Module module) {
+    public void deleteModule(int mid, int pid) {
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "DELETE FROM module WHERE mid = ? AND module_name = ? AND module.pid = ?";
+            String SQL = "DELETE FROM module WHERE mid = ? AND module.pid = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setInt(1, module.getModuleID());
-            pstmt.setString(2, module.getModuleName());
-            pstmt.setInt(3, module.getProjectID());
+            pstmt.setInt(1, mid);
+            pstmt.setInt(2, pid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
