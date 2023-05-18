@@ -6,7 +6,6 @@ import com.example.eksamensprojekt.models.Module;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.repositories.ModuleRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -49,5 +48,8 @@ public class ModuleService {
         moduleRepository.assignUser(user, module);
     }
 
+    public ArrayList<Module> viewAssignedModules(User user) {
+        return moduleRepository.viewAssignedModules(user);
+    }
 
 }

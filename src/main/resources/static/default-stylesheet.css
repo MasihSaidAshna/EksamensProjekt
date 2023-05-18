@@ -16,6 +16,46 @@ h2 {
     /*color: #f38ba8;*/
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #24273a;
+    /*background-color: #0d1117;*/
+    /*background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
+*/}
+
+table {
+    width: auto;
+}
+
+tbody, th, tr, td {
+    font-family: "Times New Roman", sans-serif;
+    color: aliceblue;
+    border-color: #a6e3a1 !important;
+    background-color: #303446;
+}
+
+select {
+    font-family: "Times New Roman", sans-serif;
+    color: aliceblue;
+    border-color: #a6e3a1 !important;
+    background-color: #303446;
+}
+
+nav, .navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px;
+    font-family: Consolas, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background-color: #303446; !important;
+    color: white; !important;
+}
+
 .signup-form {
     width: 400px;
     margin: 0 auto;
@@ -60,27 +100,6 @@ h2 {
     text-align: center;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #24273a;
-    /*background-color: #0d1117;*/
-    /*background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn1ICREecXXqMUbnEPTMBfh0VNl8LQbtePwJGVxEb9wPtKILeaxX-kXLygXAxPOeT3f9XFqk7yXVlvz6z8Emppsfwsb1eIo3Ghe-I8xN327JzdzZBCojb2ymfmhzhS-m5INyaMTBTRXL1FBdUO2HKCuMgIYiOTDxljGvimAZAyrJ6OdeGIWn4OSZc5NQ/s1920/27042022-WHITE-BACKGROUND.png");
-*/}
-
-table {
-    width: auto;
-}
-
-tbody, th, tr, td {
-    font-family: "Times New Roman", sans-serif;
-    color: aliceblue;
-    border-color: #a6e3a1 !important;
-    background-color: #303446;
-}
-
 .bi, .bi-eye-fill, .bi-pencil-square, .bi-trash-fill {
     width: 3px;
 }
@@ -101,18 +120,6 @@ tbody, th, tr, td {
 
 .signup-form {
     color: #a6e3a1;
-}
-
-nav, .navbar{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 10px;
-    font-family: Consolas, sans-serif;
-    font-weight: bold;
-    text-align: center;
-    background-color: #303446; !important;
-    color: white; !important;
 }
 
 .navbar-brand, .nav-link, .navbar-nav{

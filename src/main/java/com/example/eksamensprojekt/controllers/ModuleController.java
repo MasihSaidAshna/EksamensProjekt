@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Controller
 public class ModuleController {
@@ -110,15 +111,44 @@ public class ModuleController {
         return "redirect:/modules/{projectID}";
     }
 
-
-    @GetMapping("/modules/assign/{projectID}/{moduleID}")
-    public String assignUser(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
+    @GetMapping("/modules/assignself/{projectID}/{moduleID}")
+    public String assignSelf(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
         User user = (User) httpSession.getAttribute("user");
         Module module = moduleService.fetchModule(projectID, moduleID);
         moduleService.assignUser(user, module);
         return "redirect:/modules/{projectID}";
     }
 
+    @GetMapping("/modules/assign/{projectID}/{moduleID}")
+    public String assignUser(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID, Model model){
+        ArrayList<User> employees = (ArrayList<User>) userService.getUsers().stream()
+                .filter(user -> user.getRole().equals(User.Role.EMPLOYEE))
+                .collect(Collectors.toList());
+        Module module = moduleService.fetchModule(projectID, moduleID);
+        model.addAttribute("module", module);
+        model.addAttribute("employees", employees);
+        return "assign-employee";
+    }
+
+
+    @PostMapping("/modules/assign/{projectID}/{moduleID}")
+    public String doAssignUser(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID,
+                               @ModelAttribute("module") Module module, @ModelAttribute("employees") ArrayList<User> employees, @RequestParam("employeeID") int employeeID){
+        User employee = userService.fetchUser(employeeID);
+        Module m = moduleService.fetchModule(projectID, moduleID);
+        m.setAssignUser(employee.getUserName());
+        moduleService.assignUser(employee, m);
+        return "redirect:/modules/{projectID}";
+    }
+
+
+    @GetMapping("/profile/modules")
+    public String viewAssignedModules(Model model){
+        User user = (User) httpSession.getAttribute("user");
+        ArrayList<Module> modules = moduleService.viewAssignedModules(user);;
+        model.addAttribute("modules", modules);
+        return "assigned-modules";
+    }
 
 }
 

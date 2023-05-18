@@ -149,4 +149,33 @@ public class ModuleRepository {
         }
     }
 
+
+    public ArrayList<Module> viewAssignedModules(User user) {
+        ArrayList<Module> moduleArrayList = new ArrayList<>();
+        Module module = null;
+        try(Connection con = DBManager.getConnection()) {
+            String SQL = "SELECT * FROM module WHERE assign_user = ?;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, user.getUserName());
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int moduleID = rs.getInt("mid");
+                int projectID = rs.getInt("pid");
+                int userID = rs.getInt("uid");
+                String moduleName = rs.getString("module_name");
+                LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                int timeEstimate = rs.getInt("time_estimate");
+                Module.Status status = Module.Status.valueOf(rs.getString("set_status"));
+                String assignUser = rs.getString("assign_user");
+                module = new Module(moduleID, projectID, userID, moduleName, deadline, timeEstimate, status, assignUser);
+                moduleArrayList.add(module);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return moduleArrayList;
+    }
+
+
+
 }

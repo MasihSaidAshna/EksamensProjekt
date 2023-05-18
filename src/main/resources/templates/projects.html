@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
   <meta charset="UTF-8">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="/default-stylesheet.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
   <title>My Projects</title>
 </head>
 <body>
@@ -59,8 +59,8 @@
           <div class="btn-group " th:if="${session.user.getRole() == session.user.role.MANAGER || session.user.getRole() == session.user.role.ADMIN}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
             <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
-            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i> Delete Project</button>
-            <div class="modal fade" th:id="'exampleModal' + ${project.getProjectID()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <a type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i> Delete Project</a>
+            <div class="modal fade" th:id="'exampleModal' + ${project.projectID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -73,8 +73,10 @@
                     <p>Deleting this project means deleting all modules inside.</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}">Delete project</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form th:action="@{/projects/delete/{projectID}(projectID=${project.projectID})}" method="post">
+                      <button type="submit" class="btn btn-danger">Delete project</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
                   </div>
                 </div>
               </div>

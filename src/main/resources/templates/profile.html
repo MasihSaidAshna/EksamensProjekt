@@ -50,6 +50,9 @@
     <div class = "p-2">
         <a class = "btn btn-primary" th:href="@{/projects/{userID}(userID=${session.user.userID})}">See projects</a>
     </div>
+    <div class = "p-2" th:if="${session.user.getRole() == session.user.role.EMPLOYEE}">
+        <a class = "btn btn-primary" th:href="@{/profile/modules}">See modules you're assigned to</a>
+    </div>
     <div class = "p-2">
         <a class = "btn btn-danger" th:href="@{/logout}">Log out</a>
     </div>
