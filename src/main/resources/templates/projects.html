@@ -59,7 +59,7 @@
           <div class="btn-group " th:if="${session.user.getRole() == session.user.role.MANAGER || session.user.getRole() == session.user.role.ADMIN}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
             <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
-            <a type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i> Delete Project</a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i> Delete Project</button>
             <div class="modal fade" th:id="'exampleModal' + ${project.projectID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">

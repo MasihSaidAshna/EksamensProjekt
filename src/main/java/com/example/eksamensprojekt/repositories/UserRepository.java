@@ -94,8 +94,8 @@ public class UserRepository {
             pstmt.setString(1, name);
             pstmt.setString(2, password);
             pstmt.setString(3, email);
-            pstmt.setInt(4, ID);
-            pstmt.setString(5, role.toString());
+            pstmt.setString(4, role.toString());
+            pstmt.setInt(5, ID);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

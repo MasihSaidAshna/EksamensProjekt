@@ -88,7 +88,7 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/projects/delete/{projectID}")
+    @PostMapping("/projects/delete/{projectID}")
     public String deleteProject(@PathVariable("projectID") int projectID){
         Project project = projectService.fetchProject(projectID);
         int uid = project.getUserID();
