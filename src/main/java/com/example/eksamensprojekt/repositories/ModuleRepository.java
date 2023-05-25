@@ -177,5 +177,48 @@ public class ModuleRepository {
     }
 
 
+    //For testing only
+    public ArrayList<Module> getAllModules() {
+        ArrayList<Module> moduleArrayList = new ArrayList<>();
+        Module module = null;
+        try(Connection con = DBManager.getConnection()) {
+            String SQL = "SELECT * FROM productmanagementtooldatabase.module;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int moduleID = rs.getInt("mid");
+                int projectID = rs.getInt("pid");
+                int userID = rs.getInt("uid");
+                String moduleName = rs.getString("module_name");
+                LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                int timeEstimate = rs.getInt("time_estimate");
+                Module.Status status = Module.Status.valueOf(rs.getString("set_status"));
+                String assignUser = rs.getString("assign_user");
+                module = new Module(moduleID, projectID, userID, moduleName, deadline, timeEstimate, status, assignUser);
+                moduleArrayList.add(module);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return moduleArrayList;
+    }
 
+
+    //Used only for testing. Not safe elsewhere
+    //Resets module table's auto_increment for mid value
+    public void resetModuleIDIncrement() {
+        try(Connection con = DBManager.getConnection()) {
+            String SQL1 = "SELECT MAX(mid) FROM module";
+            PreparedStatement pstmt1 = con.prepareStatement(SQL1);
+            ResultSet rs = pstmt1.executeQuery();
+            if (rs.next()){
+                int maxProjectID = rs.getInt("MAX(mid)");
+                String SQL2 = "ALTER TABLE module AUTO_INCREMENT = " + (maxProjectID + 1);
+                PreparedStatement pstmt2 = con.prepareStatement(SQL2);
+                pstmt2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

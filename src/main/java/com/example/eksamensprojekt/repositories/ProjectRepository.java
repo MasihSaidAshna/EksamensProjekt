@@ -99,5 +99,22 @@ public class ProjectRepository {
         }
     }
 
+    //Used only for testing. Not safe elsewhere
+    //Resets project table's auto_increment for pid value
+    public void resetProjectIDIncrement() {
+        try(Connection con = DBManager.getConnection()) {
+            String SQL1 = "SELECT MAX(pid) FROM project";
+            PreparedStatement pstmt1 = con.prepareStatement(SQL1);
+            ResultSet rs = pstmt1.executeQuery();
+            if (rs.next()){
+                int maxProjectID = rs.getInt("MAX(pid)");
+                String SQL2 = "ALTER TABLE project AUTO_INCREMENT = " + (maxProjectID + 1);
+                PreparedStatement pstmt2 = con.prepareStatement(SQL2);
+                pstmt2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

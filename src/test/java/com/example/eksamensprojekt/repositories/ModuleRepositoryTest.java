@@ -21,13 +21,12 @@ public class ModuleRepositoryTest {
     private ModuleRepository moduleRepository;
     int moduleIDIncrement;
 
-    @BeforeEach
+    @BeforeAll
     public void setup() {
         userRepository = new UserRepository();
         projectRepository = new ProjectRepository();
         moduleRepository = new ModuleRepository(projectRepository);
-        Project p = projectRepository.fetchProject(1);
-        moduleIDIncrement = getLatestIncrement(moduleRepository.getModules(p));
+        moduleIDIncrement = getLatestIncrement(moduleRepository.getAllModules());
     }
 
     public int getLatestIncrement(ArrayList<Module> modules) {
@@ -95,17 +94,16 @@ public class ModuleRepositoryTest {
         Project project = projectRepository.fetchProject(1);
         moduleRepository.createModule(user, project, moduleTest);
 
-        Module module = moduleRepository.fetchModule(1, moduleTest.getModuleID());
+        Module module = moduleRepository.fetchModule(1, moduleIDIncrement);
 
         assertModules(moduleTest, module);
     }
 
 
-    //WILL FAIL if the tests are run more than once without resetting the database because projectID's are incremented weirdly on MySQL after a project has been deleted.
-    //Apparently this test and the next will fail every other time the file is run because the auto incremented ID's don't line up after project deletion.
     @Test
     @Order(4)
     public void editModuleTest() {
+        System.out.println(moduleIDIncrement);
         Module moduleTest = moduleRepository.fetchModule(1, moduleIDIncrement);
         moduleTest.setModuleName("UPDATED Test module random");
         moduleRepository.updateModule(moduleTest);
@@ -119,6 +117,7 @@ public class ModuleRepositoryTest {
     public void deleteModuleTest() {
         moduleRepository.deleteModule(moduleIDIncrement, 1);
         assertNull(moduleRepository.fetchModule( 1, moduleIDIncrement));
+        moduleRepository.resetModuleIDIncrement(); //Necessary to reset the automatic increment of ID's after deletion of module to prevent errors
     }
 
 }

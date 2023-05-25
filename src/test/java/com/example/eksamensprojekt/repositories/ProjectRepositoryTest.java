@@ -89,8 +89,6 @@ public class ProjectRepositoryTest {
     }
 
 
-    //WILL FAIL if the tests are run more than once without resetting the database because projectID's are incremented weirdly on MySQL after a project has been deleted.
-    //Apparently this test and the next will fail every other time the file is run because the auto incremented ID's don't line up after project deletion.
     @Test
     @Order(2)
     public void editProjectTest() {
@@ -108,6 +106,7 @@ public class ProjectRepositoryTest {
     public void deleteProjectTest() {
         projectRepository.deleteProject(projectIDIncrement);
         assertNull(projectRepository.fetchProject(projectIDIncrement));
+        projectRepository.resetProjectIDIncrement(); //Necessary to reset the automatic increment of ID's after deletion of project to prevent errors
     }
 
 }
