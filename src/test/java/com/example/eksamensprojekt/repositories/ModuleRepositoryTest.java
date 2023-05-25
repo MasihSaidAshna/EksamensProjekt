@@ -19,19 +19,21 @@ public class ModuleRepositoryTest {
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
     private ModuleRepository moduleRepository;
-    private int moduleIDIncrement;
+    int moduleIDIncrement;
 
     @BeforeEach
     public void setup() {
         userRepository = new UserRepository();
         projectRepository = new ProjectRepository();
         moduleRepository = new ModuleRepository(projectRepository);
+        Project p = projectRepository.fetchProject(1);
+        moduleIDIncrement = getLatestIncrement(moduleRepository.getModules(p));
     }
 
     public int getLatestIncrement(ArrayList<Module> modules) {
-        int mid = 0;
+        int mid = modules.size();
         for (Module m : modules){
-            if (m.getModuleID() > mid){
+            if (m.getModuleID() >= mid){
                 mid = m.getModuleID() + 1;
             }
         }
@@ -39,7 +41,7 @@ public class ModuleRepositoryTest {
     }
 
     public void assertModules(Module m1, Module m2) {
-        //assertEquals(m1.getModuleID(), m2.getModuleID());
+        assertEquals(m1.getModuleID(), m2.getModuleID());
         assertEquals(m1.getProjectID(), m2.getProjectID());
         assertEquals(m1.getUserID(), m2.getUserID());
         assertEquals(m1.getModuleName(), m2.getModuleName());
@@ -52,7 +54,8 @@ public class ModuleRepositoryTest {
 
 
     @Test
-    public void fetchProjectTest() {
+    @Order(1)
+    public void fetchModuleTest() {
         Module moduleTest = new Module(1, 1, 2, "Module random", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
         Module module = moduleRepository.fetchModule(1, 1);
 
@@ -61,7 +64,8 @@ public class ModuleRepositoryTest {
 
 
     @Test
-    public void getProjectsTest() {
+    @Order(2)
+    public void getModulesTest() {
         Module mt1 = new Module(1, 1, 2, "Module random", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
         Module mt2 = new Module(2, 1, 2, "Module random 2", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
 
@@ -82,17 +86,16 @@ public class ModuleRepositoryTest {
 
 
     @Test
-    @Order(1)
-    public void createProjectTest() { //Note you can't assign a projectID because it's auto incremented and timeEstimate will always be 0 when project has no modules.
-        Project p = projectRepository.fetchProject(1);
-        moduleIDIncrement = getLatestIncrement(moduleRepository.getModules(p));
+    @Order(3)
+    public void createModuleTest() { //Note you can't assign a projectID because it's auto incremented and timeEstimate will always be 0 when project has no modules.
+        System.out.println(moduleIDIncrement);
         Module moduleTest = new Module(moduleIDIncrement, 1, 2, "Test module random", LocalDate.of(2033,5,12), 4, Module.Status.DONE, "Unassigned");
 
         User user = userRepository.fetchUser(2);
         Project project = projectRepository.fetchProject(1);
         moduleRepository.createModule(user, project, moduleTest);
 
-        Module module = moduleRepository.fetchModule(1, moduleIDIncrement);
+        Module module = moduleRepository.fetchModule(1, moduleTest.getModuleID());
 
         assertModules(moduleTest, module);
     }
@@ -101,9 +104,8 @@ public class ModuleRepositoryTest {
     //WILL FAIL if the tests are run more than once without resetting the database because projectID's are incremented weirdly on MySQL after a project has been deleted.
     //Apparently this test and the next will fail every other time the file is run because the auto incremented ID's don't line up after project deletion.
     @Test
-    @Order(2)
-    public void editProjectTest() {
-        System.out.println(moduleIDIncrement);
+    @Order(4)
+    public void editModuleTest() {
         Module moduleTest = moduleRepository.fetchModule(1, moduleIDIncrement);
         moduleTest.setModuleName("UPDATED Test module random");
         moduleRepository.updateModule(moduleTest);
@@ -113,8 +115,8 @@ public class ModuleRepositoryTest {
 
 
     @Test
-    @Order(3)
-    public void deleteProjectTest() {
+    @Order(5)
+    public void deleteModuleTest() {
         moduleRepository.deleteModule(moduleIDIncrement, 1);
         assertNull(moduleRepository.fetchModule( 1, moduleIDIncrement));
     }
