@@ -16,7 +16,7 @@ public class ProjectRepository {
     public ArrayList<Project> getProjects() {
         ArrayList<Project> projectArrayList = new ArrayList<>();
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM productmanagementtooldatabase.project;";
+            String SQL = "SELECT * FROM project;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

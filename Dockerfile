@@ -1,19 +1,22 @@
 FROM lakruzz/lamj:latest
 
-# ENV MYSQL_ROOT_PASSWORD=root
-
 ENV PORT=8181
+ENV MYSQL_DATABASE=project_management_tool
 ENV MYSQL_PORT=3306
+ENV MYSQLDB_DOCKER_PORT=3306
+
+ENV MYSQL_ROOT_PASSWORD=usqx54FjAPYodF
 
 COPY src /src
 COPY pom.xml /pom.xml
 RUN set -ex; \
-     mvn -f /pom.xml clean package; \
+     mvn -f /pom.xml clean package -DskipTests; \
      mv /target/*.jar /app/; \
      rm -rf /target; \
      rm -rf /src; \
      rm -rf /pom.xml;
 
+COPY src/main/resources/application.properties src/main/resources/
 COPY src/main/resources/* /docker-entrypoint-initdb.d/
 
 EXPOSE $PORT $MYSQL_PORT
@@ -23,11 +26,11 @@ CMD set -eux; \
     java -jar /app/*.jar;
 
 # Build like this:
-# docker build  -t alphasolutions .
+# docker build  -t eksamensprojekt .
 
 # Run like this:
 # MYSQL_ROOT_PASSWORD=<Secret password>
-# docker run -it --rm --name alphasolutions --pid=host -p 8080:8080  -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD alphasolutions
+# docker run -it --rm --name eksamensprojekt --pid=host -p 8181:8181  -e MYSQL_ROOT_PASSWORD=usqx54FjAPYodF eksamensprojekt
 #
 #   - `docker run`: This command is used to run a container from an image.
 #   - `-it`: This switch allocates a pseudo-TTY and opens an interactive terminal within the container.

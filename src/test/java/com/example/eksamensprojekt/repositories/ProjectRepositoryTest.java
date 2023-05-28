@@ -59,7 +59,7 @@ public class ProjectRepositoryTest {
     public void getProjectsTest() {
         Project pt1 = new Project(1, 2, "Fun program", "Batman", LocalDate.of(2023, 8, 6), 8);
         Project pt2 = new Project(2, 2, "Clever program", "Batman", LocalDate.of(2024, 6, 10), 3);
-        Project pt3 = new Project(3, 1, "Program", "Admin1", LocalDate.of(2023, 8, 6), 5);
+        Project pt3 = new Project(3, 1, "Program", "Admin", LocalDate.of(2023, 7, 10), 5);
 
         ArrayList<Project> projectsTest = new ArrayList<>();
         projectsTest.add(pt1);
@@ -92,7 +92,7 @@ public class ProjectRepositoryTest {
     @Test
     @Order(2)
     public void editProjectTest() {
-        System.out.println(projectIDIncrement);
+        //System.out.println(projectIDIncrement);
         projectRepository.updateProject(projectIDIncrement, "UPDATED Test program", LocalDate.of(2030, 8, 6));
 
         Project project = projectRepository.fetchProject(projectIDIncrement);

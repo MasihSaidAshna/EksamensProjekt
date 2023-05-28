@@ -59,7 +59,7 @@
           <div class="btn-group " th:if="${session.user.getRole() == session.user.role.MANAGER || session.user.getRole() == session.user.role.ADMIN}">
             <a type="button" class="btn btn-primary btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-eye-fill"></i> View Project</a>
             <a type="button" class="btn btn-success btn-sm" th:href="@{/projects/update/{projectID}(projectID=${project.getProjectID()})}"><i class="bi bi-pencil-square"></i> Update Project</a>
-            <a type="button" class="btn btn-danger btn-sm" th:href="@{/modules/{projectID}(projectID=${project.getProjectID()})}" ><i class="bi bi-trash-fill"></i> Delete Project</a>
+            <a type="button" class="btn btn-danger btn-sm" th:href="@{/projects/delete/{projectID}(projectID=${project.getProjectID()})}" ><i class="bi bi-trash-fill"></i> Delete Project</a>
           </div>
         </td>
       </tr>

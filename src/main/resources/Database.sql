@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS productManagementToolDatabase;
-CREATE DATABASE IF NOT EXISTS productManagementToolDatabase;
-USE productManagementToolDatabase;
+DROP DATABASE IF EXISTS project_management_tool;
+CREATE DATABASE IF NOT EXISTS project_management_tool;
+USE project_management_tool;
 
 CREATE TABLE user (
     uid INT NOT NULL AUTO_INCREMENT,
@@ -41,13 +41,13 @@ CREATE TABLE module (
 
 -- Add test data
 INSERT INTO user (name, password, email, role) VALUES
-    ('Admin1', 'root', 'Ad@Min.com', 'ADMIN');
+    ('Admin', 'root', 'Ad@Min.com', 'ADMIN');
 
 INSERT INTO user (name, password, email, role) VALUES
     ('Batman', 'bat', 'Bat@Man.com', 'MANAGER');
 
 INSERT INTO user (name, password, email, role) VALUES
-    ('Mumu', 'popo', 'Mu@Mu.com', 'EMPLOYEE');
+    ('Mojo', 'jojo', 'Mo@Jo.com', 'EMPLOYEE');
 
 INSERT INTO user (name, password, email, role) VALUES
     ('Joe', 'joe', 'J@J.com', 'EMPLOYEE');
@@ -59,19 +59,19 @@ INSERT INTO project (project_name, deadline, uid) VALUES
     ('Clever program', STR_TO_DATE('2024-06-10','%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Batman'));
 
 INSERT INTO project (project_name, deadline, uid) VALUES
-    ('Program', STR_TO_DATE('2023-08-06', '%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Admin1'));
+    ('Program', STR_TO_DATE('2023-07-10', '%Y-%m-%d'), (SELECT uid FROM user WHERE name = 'Admin'));
 
 INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES
-    ('Module random', STR_TO_DATE('2023-05-12', '%Y-%m-%d'), 4, 'DOING', (SELECT pid FROM project WHERE project_name = 'Fun program'), (SELECT uid FROM user WHERE name = 'Batman'));
+    ('Module random', STR_TO_DATE('2023-06-18', '%Y-%m-%d'), 4, 'DOING', (SELECT pid FROM project WHERE project_name = 'Fun program'), (SELECT uid FROM user WHERE name = 'Batman'));
 
 INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES
-    ('Module random 2', STR_TO_DATE('2023-05-12', '%Y-%m-%d'), 4, 'DOING', (SELECT pid FROM project WHERE project_name = 'Fun program'), (SELECT uid FROM user WHERE name = 'Batman'));
+    ('Module random 2', STR_TO_DATE('2023-06-30', '%Y-%m-%d'), 4, 'DOING', (SELECT pid FROM project WHERE project_name = 'Fun program'), (SELECT uid FROM user WHERE name = 'Batman'));
 
 INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES
     ('Some module', STR_TO_DATE('2023-05-31', '%Y-%m-%d'), 3, 'TO_DO', (SELECT pid FROM project WHERE project_name = 'Clever program'), (SELECT uid FROM user WHERE name = 'Batman'));
 
 INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES
-    ('Some admin module', STR_TO_DATE('2023-06-30', '%Y-%m-%d'), 5, 'DOING', (SELECT pid FROM project WHERE project_name = 'Program'), (SELECT uid FROM user WHERE name = 'Admin1'));
+    ('Some admin module', STR_TO_DATE('2023-06-30', '%Y-%m-%d'), 5, 'DOING', (SELECT pid FROM project WHERE project_name = 'Program'), (SELECT uid FROM user WHERE name = 'Admin'));
 
 -- Updating project_creator values
 SET SQL_SAFE_UPDATES = 0;

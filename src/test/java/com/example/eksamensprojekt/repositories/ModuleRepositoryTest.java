@@ -55,7 +55,7 @@ public class ModuleRepositoryTest {
     @Test
     @Order(1)
     public void fetchModuleTest() {
-        Module moduleTest = new Module(1, 1, 2, "Module random", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
+        Module moduleTest = new Module(1, 1, 2, "Module random", LocalDate.of(2023,6,18), 4, Module.Status.DOING, "Unassigned");
         Module module = moduleRepository.fetchModule(1, 1);
 
         assertModules(moduleTest, module);
@@ -65,8 +65,8 @@ public class ModuleRepositoryTest {
     @Test
     @Order(2)
     public void getModulesTest() {
-        Module mt1 = new Module(1, 1, 2, "Module random", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
-        Module mt2 = new Module(2, 1, 2, "Module random 2", LocalDate.of(2023,5,12), 4, Module.Status.DOING, "Unassigned");
+        Module mt1 = new Module(1, 1, 2, "Module random", LocalDate.of(2023,6,18), 4, Module.Status.DOING, "Unassigned");
+        Module mt2 = new Module(2, 1, 2, "Module random 2", LocalDate.of(2023,6,30), 4, Module.Status.DOING, "Unassigned");
 
         ArrayList<Module> modulesTest = new ArrayList<>();
         modulesTest.add(mt1);
@@ -87,7 +87,7 @@ public class ModuleRepositoryTest {
     @Test
     @Order(3)
     public void createModuleTest() { //Note you can't assign a projectID because it's auto incremented and timeEstimate will always be 0 when project has no modules.
-        System.out.println(moduleIDIncrement);
+        //System.out.println(moduleIDIncrement);
         Module moduleTest = new Module(moduleIDIncrement, 1, 2, "Test module random", LocalDate.of(2033,5,12), 4, Module.Status.DONE, "Unassigned");
 
         User user = userRepository.fetchUser(2);
@@ -103,7 +103,7 @@ public class ModuleRepositoryTest {
     @Test
     @Order(4)
     public void editModuleTest() {
-        System.out.println(moduleIDIncrement);
+        //System.out.println(moduleIDIncrement);
         Module moduleTest = moduleRepository.fetchModule(1, moduleIDIncrement);
         moduleTest.setModuleName("UPDATED Test module random");
         moduleRepository.updateModule(moduleTest);

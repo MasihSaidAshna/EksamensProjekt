@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
     @Test
     public void fetchUserTest() {
-        User userTest = new User(1, "Admin1", "root", "Ad@Min.com", User.Role.ADMIN);
+        User userTest = new User(1, "Admin", "root", "Ad@Min.com", User.Role.ADMIN);
         User user = userRepository.fetchUser(1);
 
         assertUsers(userTest, user);
@@ -37,9 +37,9 @@ public class UserRepositoryTest {
 
     @Test
     public void getUsersTest() {
-        User userTest1 = new User(1, "Admin1", "root", "Ad@Min.com", User.Role.ADMIN);
+        User userTest1 = new User(1, "Admin", "root", "Ad@Min.com", User.Role.ADMIN);
         User userTest2 = new User(2, "Batman", "bat", "Bat@Man.com", User.Role.MANAGER);
-        User userTest3 = new User(3, "Mumu", "popo", "Mu@Mu.com", User.Role.EMPLOYEE);
+        User userTest3 = new User(3, "Mojo", "jojo", "Mo@Jo.com", User.Role.EMPLOYEE);
         User userTest4 = new User(4, "Joe", "joe", "J@J.com", User.Role.EMPLOYEE);
 
         ArrayList<User> usersTest = new ArrayList<>();

@@ -182,7 +182,7 @@ public class ModuleRepository {
         ArrayList<Module> moduleArrayList = new ArrayList<>();
         Module module = null;
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "SELECT * FROM productmanagementtooldatabase.module;";
+            String SQL = "SELECT * FROM module;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
