@@ -25,7 +25,7 @@ src="Bilag/Domænemodel.jpg">
 
 ## Relationer mellem entiteter
 
-###Strukturen af databasen 
+### Strukturen af databasen 
 <img
 width="782"
 alt="image"
