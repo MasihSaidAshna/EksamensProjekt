@@ -19,19 +19,18 @@ Software forudsætninger til at køre programmet lokalt:
 
 # Simpel Bruger anvisning
 
-Vores system har fokus på konsistents af knapper, dette har vi gjort, da vi mener det utroligt vigtigt at minimere kognitiv belastning for at maksimere indlæringsevnen, derfor har vi igennem hele systemet fokus på konsistense knapper.
+Jeres system fokuserer på konsistensen af knapper. Dette er vigtigt for at minimere den kognitive belastning og maksimere indlæringsevnen. I hele systemet er der derfor fokus på konsistensen af knapper.
 
-Typiske knapper:
+Her er nogle typiske knapper, I anvender:
 
-* Create - Denne knap benyttes til at skabe et projekt eller module.
-* Delete - Denne knap benyttes til at slette et projekt eller module.
-* View - Denne knap benyttes til at se hvad et projekt eller module indholder.
-* Update - Denne knap benyttes til at updatere både projekter og modules.
-* Login - Logger ind i systemet.
-* Log ud - Logger ud af systemet.
-* Go back - Går tilbage til forrige side.
-* Assign employes - Projekt manegers kan tilkoble ansatte til modules.
-
+* Create: Denne knap bruges til at oprette et projekt eller en modul.
+* Delete: Denne knap bruges til at slette et projekt eller en modul.
+* View: Denne knap bruges til at se, hvad et projekt eller en modul indeholder.
+* Update: Denne knap bruges til at opdatere både projekter og moduler.
+* Login: Logger ind i systemet.
+* Log ud: Logger ud af systemet.
+* Go back: Går tilbage til den forrige side.
+* Assign employees: Projektledere kan tilknytte medarbejdere til moduler.
 
 Applikationen er deployet på cloud så den er offentligt tilgængelig i linket under Web Service.
 Applikationen ligger på Render.com som bruger vores docker file til at bygge et image af programmet og køre applikationen. 
