@@ -25,6 +25,7 @@ src="Bilag/Domænemodel.jpg">
 
 ## Relationer mellem entiteter
 
+###Strukturen af databasen 
 <img
 width="782"
 alt="image"
@@ -32,6 +33,7 @@ src="Bilag/ER diagram.png">
 
 ## Klassediagram
 
+### Struktur for alle klasserne i programmet
 <img
 width="782"
 alt="image"
