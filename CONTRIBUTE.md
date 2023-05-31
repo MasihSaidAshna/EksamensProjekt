@@ -33,7 +33,7 @@ src="Bilag/ER diagram.png">
 
 ## Klassediagram
 
-### Struktur for alle klasserne i programmet
+### Struktur for alle klasserne i programmet samt deres metoder
 <img
 width="782"
 alt="image"
