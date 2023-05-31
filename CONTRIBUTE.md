@@ -40,17 +40,19 @@ alt="image"
 src="Bilag/UML Diagram.jpg">
 
 ## Aktivitetsdiagrammer
-Dette er aktiviterne der udføres når en brugere forsøger at logge ind.
+### Dette er aktiviterne der udføres når en brugere forsøger at logge ind.
 <img
 width="782"
 alt="image"
 src="Bilag/AktivitetsdiagramLoginInd.png">
-Dette er aktiviterne der udføres når brugeren forsøger at navigere hovedmenuen ind til deres projekter.
+
+### Dette er aktiviterne der udføres når brugeren forsøger at navigere hovedmenuen ind til deres projekter.
 <img
 width="782"
 alt="image"
 src="Bilag/AktivitetsdiagramMenu.png">
-Dette er aktiviterne der udføres når brugeren navigere vores projektside.
+
+### Dette er aktiviterne der udføres når brugeren navigere vores projektside.
 <img
 width="782"
 alt="image"
