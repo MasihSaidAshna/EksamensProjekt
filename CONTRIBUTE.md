@@ -56,16 +56,19 @@ src="Bilag/AktivitetsdiagramProjektsiden.png">
 
 ## Sekvensdiagrammer
 
+### Processen som opstår når brugeren klikker "Log in"
 <img
 width="782"
 alt="image"
 src="Bilag/Login sequence diagram.jpg">
 
+### Processen for "Sign up"
 <img
 width="782"
 alt="image"
 src="Bilag/Signup sequence diagram.jpg">
 
+### Processen for når brugeren udfylder en projektform og klikker "Create project"
 <img
 width="782"
 alt="image"
