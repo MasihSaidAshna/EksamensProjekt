@@ -10,10 +10,18 @@ Oprettelse, sletning og redigering er begrænset til brugere med "MANAGER" rolle
 Inden i projekter kan man skabe, redigere eller slette moduler, som er opgaver der er oprettes med en deadline og et tidsestimat. 
 Når et modul er oprettet kan man tildele en bruger med "EMPLOYEE" rollen til at udføre opgaven så de er ansvarlige for modulet. 
 Der er desuden en tredje brugerrolle som er begrænset til udviklere af programmet: "ADMIN" rollen. Denne rolle har adgang til alt og kan se alle brugere som er gemt på databasen.
+Når et modul oprettes med et tidsestimat under et projekt vil projektets eget tidsestimat blive opdateret som summen af alle modulers tid sammenlagt. 
 Vores valg af database er MySQL, som bliver håndteret af Java programmet. Hver CRUD operation for brugere, projekter og moduler påvirker databasen. 
 
 Vi har brugt Springboot til at få applikationen til at køre på nettet samt HTML, Thymeleaf og Bootstrap til front-end.  
 Der er lavet en dockerfil til at få programmet til at køre på skyen, som findes udenfor "src" mappen. Se linket til Render.com for at se applikationen køre på nettet.
+
+## Domænemodel
+
+<img
+width="782"
+alt="image"
+src="Bilag/Domænemodel.jpg">
 
 ## Relationer mellem entiteter
 
