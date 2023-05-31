@@ -17,6 +17,22 @@ Software forudsætninger til at køre programmet lokalt:
 * CSS - CSS3
 * Maven - 4.0.0
 
+# Simpel Bruger anvisning
+
+Vores system har fokus på konsistents af knapper, dette har vi gjort, da vi mener det utroligt vigtigt at minimere kognitiv belastning for at maksimere indlæringsevnen, derfor har vi igennem hele systemet fokus på konsistense knapper.
+
+Typiske knapper:
+
+* Create - Denne knap benyttes til at skabe et projekt eller module.
+* Delete - Denne knap benyttes til at slette et projekt eller module.
+* View - Denne knap benyttes til at se hvad et projekt eller module indholder.
+* Update - Denne knap benyttes til at updatere både projekter og modules.
+* Login - Logger ind i systemet.
+* Log ud - Logger ud af systemet.
+* Go back - Går tilbage til forrige side.
+* Assign employes - Projekt manegers kan tilkoble ansatte til modules.
+
+
 Applikationen er deployet på cloud så den er offentligt tilgængelig i linket under Web Service.
 Applikationen ligger på Render.com som bruger vores docker file til at bygge et image af programmet og køre applikationen. 
 Vi har valgt at køre programmet på en cloud, da det gør det væsentligt lettere for brugerne at kunne benytte systemet uden at skulle bekymre sig om de mange softwareforudsætninger, som tidligere nævnt.
