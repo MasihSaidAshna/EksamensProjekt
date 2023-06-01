@@ -26,6 +26,11 @@ public class LoginController {
     }
 
 
+    @GetMapping("/about")
+    public String showAbout(){
+        return "about";
+    }
+
     public boolean isLoggedIn(){
         return httpSession.getAttribute("user") != null;
     }

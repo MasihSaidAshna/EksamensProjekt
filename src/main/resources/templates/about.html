@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/default-stylesheet.css">
+  <title>About</title>
+</head>
+<body>
+<div>
+  <nav class="navbar navbar-expand-lg header">
+    <a class="navbar-brand" th:href="@{/}">Project Management Tool</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="container">
+  <div class="text-center">
+    <h1>Datamatiker 2023 eksamensprojekt i 2. semester</h1>
+    <h2>Introduktion:</h2>
+    <p>
+      Programmet er et projektstyringsværktøj, som er et system der giver overblik over en liste af vilkårlige projekter samt moduler under disse. Systemet er designet til vores Product Owner (PO) og derfor har det overblik over de nødvendigheder, de skal kunne benytte sig af.
+    </p>
+    <h2>Simpel Bruger anvisning:</h2>
+  </div>
+
+  <ul>
+    <li>Create: Denne knap bruges til at oprette et projekt eller en modul.</li>
+    <li>Delete: Denne knap bruges til at slette et projekt eller en modul.</li>
+    <li>View: Denne knap bruges til at se, hvad et projekt eller en modul indeholder.</li>
+    <li>Update: Denne knap bruges til at opdatere både projekter og moduler.</li>
+    <li>Login: Logger ind i systemet.</li>
+    <li>Log ud: Logger ud af systemet.</li>
+    <li>Go back: Går tilbage til den forrige side.</li>
+    <li>Assign employees: Projektledere kan tilknytte medarbejdere til moduler.</li>
+  </ul>
+  <div class="text-center">
+    <a href="https://github.com/MasihSaidAshna/EksamensProjekt/blob/main/README.md">Læs en mere detaljeret guide på dette link!</a>
+  </div>
+</div>
+</body>
+</html>

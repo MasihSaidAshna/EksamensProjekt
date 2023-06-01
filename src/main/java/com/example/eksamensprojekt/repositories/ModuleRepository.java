@@ -74,15 +74,15 @@ public class ModuleRepository {
 
     public boolean createModule(User user, Project project, Module module){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES (?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, (SELECT pid FROM project WHERE project_name = ?), (SELECT uid FROM user WHERE name = ?));";
+            String SQL = "INSERT INTO module (module_name, deadline, time_estimate, set_status, pid, uid) VALUES (?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, ?, ?);";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, module.getModuleName());
             pstmt.setString(2, module.getDeadline().toString());
             pstmt.setInt(3, module.getTimeEstimate());
             module.setStatus(Module.Status.TO_DO);
             pstmt.setString(4, module.getStatus().toString());
-            pstmt.setString(5, project.getProjectName());
-            pstmt.setString(6, user.getUserName());
+            pstmt.setInt(5, project.getProjectID());
+            pstmt.setInt(6, user.getUserID());
             pstmt.execute();
             updateProjectTimeEstimate();
             return true;

@@ -16,6 +16,16 @@ h2 {
     /*color: #f38ba8;*/
 }
 
+p {
+    font-family: Consolas, sans-serif;
+    color: white;
+}
+
+ul, li {
+    font-family: Consolas, sans-serif;
+    color: white;
+}
+
 body {
     display: flex;
     justify-content: center;

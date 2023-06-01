@@ -59,12 +59,12 @@ public class ProjectRepository {
 
     public boolean createProject(User user, Project project){
         try(Connection con = DBManager.getConnection()) {
-            String SQL = "INSERT INTO project (project_name, project_creator, deadline, uid) VALUES (?, ?, STR_TO_DATE(?,'%Y-%m-%d'), (SELECT uid FROM user WHERE name = ?));";
+            String SQL = "INSERT INTO project (project_name, project_creator, deadline, uid) VALUES (?, ?, STR_TO_DATE(?,'%Y-%m-%d'), ?);";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, project.getProjectName());
             pstmt.setString(2, user.getUserName());
             pstmt.setString(3, project.getDeadline().toString());
-            pstmt.setString(4, user.getUserName());
+            pstmt.setInt(4, user.getUserID());
             pstmt.execute();
             return true;
         } catch (SQLException e) {
