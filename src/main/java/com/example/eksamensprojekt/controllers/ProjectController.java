@@ -27,23 +27,24 @@ public class ProjectController {
 
 
 
+    //Får fat i alle projekter i databasen
     @GetMapping("/projects/{userID}")
     public String getProjects(@PathVariable("userID") int userID, Model model) {
         User user = userService.fetchUser(userID);
-        ArrayList<Project> projects = projectService.getProjects();
+        ArrayList<Project> projects = projectService.getProjects(); //Henter alle projekter i databasen
         model.addAttribute("userID", userID);
         model.addAttribute("user", user);
-        model.addAttribute("projects", projects);
+        model.addAttribute("projects", projects); //Listen af projekter tilføjes til model som attribut
         return "projects";
     }
 
 
     @GetMapping("/projects/create/{userID}")
     public String createProject(@PathVariable int userID, Model model){
-        LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now(); //Lokal tid lige nu
         model.addAttribute("now", now);
         model.addAttribute("userID", userID);
-        model.addAttribute("projectForm", new Project());
+        model.addAttribute("projectForm", new Project()); //Tomt projekt objekt
         return "project-form";
     }
 
@@ -51,7 +52,7 @@ public class ProjectController {
     @PostMapping("/projects/create/{userID}")
     public String doCreateProject(@ModelAttribute("projectForm") Project project, @ModelAttribute("userID") int uid, Model model) {
         User user = userService.fetchUser(uid);
-        boolean success = projectService.createProject(user, project);
+        boolean success = projectService.createProject(user, project); //Opretter objekt ud fra projektet som blev indtastet og bruger ID
         if (success){
             return "redirect:/projects/{userID}";
         }
@@ -67,7 +68,7 @@ public class ProjectController {
         Project project = projectService.fetchProject(projectID);
         LocalDate now = LocalDate.now();
         model.addAttribute("now", now);
-        model.addAttribute("projectForm", project);
+        model.addAttribute("projectForm", project); //Henter projektet som skal blive redigeret
         return "projectupdate-form";
     }
 
@@ -77,7 +78,7 @@ public class ProjectController {
         String newProjectName = project.getProjectName();
         LocalDate newProjectDeadline = project.getDeadline();
 
-        boolean success = projectService.updateProject(projectID, newProjectName, newProjectDeadline);
+        boolean success = projectService.updateProject(projectID, newProjectName, newProjectDeadline); //Gemmer det nye navn og deadline til databasen
         if (success){
             return "redirect:/projects/" + project.getUserID();
         }

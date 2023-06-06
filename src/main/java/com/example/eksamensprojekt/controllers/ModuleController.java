@@ -33,8 +33,8 @@ public class ModuleController {
 
     @GetMapping("/modules/{projectID}")
     public String getModules(@PathVariable("projectID") int projectID, Model model) {
-        Project project = projectService.fetchProject(projectID);
-        ArrayList<Module> modules = moduleService.getModules(project);
+        Project project = projectService.fetchProject(projectID); //Henter projektet som ejer alle modulerne
+        ArrayList<Module> modules = moduleService.getModules(project); //Henter alle moduler under projektet
         model.addAttribute("projectID", projectID);
         model.addAttribute("project", project);
         model.addAttribute("modules", modules);
@@ -59,7 +59,7 @@ public class ModuleController {
     public String doCreateModule(@PathVariable int projectID, @ModelAttribute("moduleForm") Module module, Model model) {
         Project project = projectService.fetchProject(projectID);
         User user = userService.fetchUser(project.getUserID());
-        boolean success = moduleService.createModule(user, project, module);
+        boolean success = moduleService.createModule(user, project, module); //Gemmer modulet under projektet og bruger
         if (success){
             return "redirect:/modules/{projectID}";
         }
@@ -111,9 +111,10 @@ public class ModuleController {
         return "redirect:/modules/{projectID}";
     }
 
+    //Assigner sig selv hvis user som er logget ind er employee rolle typen ved at bruge HttpSession.
     @GetMapping("/modules/assignself/{projectID}/{moduleID}")
     public String assignSelf(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID){
-        User user = (User) httpSession.getAttribute("user");
+        User user = (User) httpSession.getAttribute("user"); //Får fat i user gemt i HttpSession under navnet "user"
         Module module = moduleService.fetchModule(projectID, moduleID);
         moduleService.assignUser(user, module);
         return "redirect:/modules/{projectID}";
@@ -123,10 +124,10 @@ public class ModuleController {
     public String assignUser(@PathVariable("projectID") int projectID, @PathVariable("moduleID") int moduleID, Model model){
         ArrayList<User> employees = (ArrayList<User>) userService.getUsers().stream()
                 .filter(user -> user.getRole().equals(User.Role.EMPLOYEE))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); //Henter en liste af alle users som har rollen "employee"
         Module module = moduleService.fetchModule(projectID, moduleID);
         model.addAttribute("module", module);
-        model.addAttribute("employees", employees);
+        model.addAttribute("employees", employees); //Tilføjer listen af employees til model
         return "assign-employee";
     }
 
@@ -137,11 +138,12 @@ public class ModuleController {
         User employee = userService.fetchUser(employeeID);
         Module m = moduleService.fetchModule(projectID, moduleID);
         m.setAssignUser(employee.getUserName());
-        moduleService.assignUser(employee, m);
+        moduleService.assignUser(employee, m); //Assigner employee til modulet "m"
         return "redirect:/modules/{projectID}";
     }
 
 
+    //Viser alle moduler man er tildelt som employee
     @GetMapping("/profile/modules")
     public String viewAssignedModules(Model model){
         User user = (User) httpSession.getAttribute("user");

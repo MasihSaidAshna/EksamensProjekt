@@ -19,10 +19,11 @@ public class UserController {
     }
 
 
+    //Bruges til admin siden
     @GetMapping("/admin/users")
     public String showUsers(Model model){
-        ArrayList<User> users = userService.getUsers();
-        model.addAttribute("users", users);
+        ArrayList<User> users = userService.getUsers(); //Får en liste af alle users i databasen
+        model.addAttribute("users", users); //Tilføjer listen til "model"
         return "users";
     }
 
