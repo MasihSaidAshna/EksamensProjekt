@@ -13,6 +13,7 @@ public class ProjectRepository {
     }
 
 
+    //Virker ligesom getUsers() bortset for at den henter alt fra projects
     public ArrayList<Project> getProjects() {
         ArrayList<Project> projectArrayList = new ArrayList<>();
         try(Connection con = DBManager.getConnection()) {
@@ -36,6 +37,7 @@ public class ProjectRepository {
     }
 
 
+    //Virker også ligesom fetchUser() men henter et projekt
     public Project fetchProject(int projectID) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "SELECT * FROM project WHERE pid = ?;";
@@ -57,6 +59,7 @@ public class ProjectRepository {
     }
 
 
+    //For at kunne indlæse en deadline i databasen ud fra java's localdate skal den først konverteres til en string og så til SQL datatypen "date" med SQL funktionen "STR_TO_DATE".
     public boolean createProject(User user, Project project){
         try(Connection con = DBManager.getConnection()) {
             String SQL = "INSERT INTO project (project_name, project_creator, deadline, uid) VALUES (?, ?, STR_TO_DATE(?,'%Y-%m-%d'), ?);";
@@ -73,6 +76,7 @@ public class ProjectRepository {
     }
 
 
+    //Opdaterer et projekts navn og deadline
     public boolean updateProject(int pid, String projectName, LocalDate deadline) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "UPDATE project SET project_name = ?, deadline = STR_TO_DATE(?,'%Y-%m-%d') WHERE pid = ?;";

@@ -19,6 +19,8 @@ public class ModuleRepository {
     }
 
 
+    //Henter alle modules under et projekt
+    //"String SQL" er virkelig lang fordi at nogle navne i module og project er ens så man skulle specifikt forklare hvilke række der skulle hentes
     public ArrayList<Module> getModules(Project project) {
         ArrayList<Module> moduleArrayList = new ArrayList<>();
         Module module = null;
@@ -35,7 +37,7 @@ public class ModuleRepository {
                 String moduleName = rs.getString("module_name");
                 LocalDate deadline = rs.getDate("deadline").toLocalDate();
                 int timeEstimate = rs.getInt("time_estimate");
-                Module.Status status = Module.Status.valueOf(rs.getString("set_status"));
+                Module.Status status = Module.Status.valueOf(rs.getString("set_status")); //Status er en enumerate ligesom user's rolle, så der skal handles med string for at java og SQL kan forstå hinanden.
                 String assignUser = rs.getString("assign_user");
                 module = new Module(moduleID, projectID, userID, moduleName, deadline, timeEstimate, status, assignUser);
                 moduleArrayList.add(module);
@@ -47,6 +49,7 @@ public class ModuleRepository {
     }
 
 
+    //Henter et modul hvor module ID og module projet ID er lig noget man vælger
     public Module fetchModule(int pid, int mid) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "SELECT * FROM module WHERE mid = ? AND module.pid = ?;";
@@ -79,8 +82,8 @@ public class ModuleRepository {
             pstmt.setString(1, module.getModuleName());
             pstmt.setString(2, module.getDeadline().toString());
             pstmt.setInt(3, module.getTimeEstimate());
-            module.setStatus(Module.Status.TO_DO);
-            pstmt.setString(4, module.getStatus().toString());
+            module.setStatus(Module.Status.TO_DO); //Når man laver et nyt module vil dens status altid først være "TO DO".
+            pstmt.setString(4, module.getStatus().toString()); //Enumerate konverteres til string type
             pstmt.setInt(5, project.getProjectID());
             pstmt.setInt(6, user.getUserID());
             pstmt.execute();
@@ -92,6 +95,7 @@ public class ModuleRepository {
     }
 
 
+    //Opdaterer et moduls navn, deadline, tidsestimat og status hvor modulets project ID og module ID er lig et eller andet
     public boolean updateModule(Module newModule) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "UPDATE module SET module_name = ?, deadline = ?, time_estimate = ?, set_status = ? WHERE module.pid = ? AND mid = ?;";
@@ -125,6 +129,7 @@ public class ModuleRepository {
     }
 
 
+    //Opdaterer module's "assign_user" til en brugers username
     public void assignUser(User user, Module module) {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "UPDATE module SET assign_user = ? WHERE module.pid = ? AND mid = ?;";
@@ -139,6 +144,7 @@ public class ModuleRepository {
     }
 
 
+    //Opdaterer et projekts tidsestimat ud fra dets modulers samlet estimat ved at beregne summen
     public void updateProjectTimeEstimate() {
         try(Connection con = DBManager.getConnection()) {
             String SQL = "UPDATE project SET time_estimate = (SELECT SUM(time_estimate) FROM module WHERE module.pid = project.pid);";
@@ -150,6 +156,7 @@ public class ModuleRepository {
     }
 
 
+    //Viser alle moduler hvor at assign_user er lig med brugerens navn.
     public ArrayList<Module> viewAssignedModules(User user) {
         ArrayList<Module> moduleArrayList = new ArrayList<>();
         Module module = null;

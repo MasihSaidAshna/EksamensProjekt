@@ -12,7 +12,7 @@ public class DBManager {
 
 
     public static Connection getConnection() {
-        try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
+        try (InputStream input = new FileInputStream("src/main/resources/application.properties")) { //Prøver at læse indholdet af application.properties
             Properties properties = new Properties();
             properties.load(input);
             url = properties.getProperty("spring.datasource.url");
